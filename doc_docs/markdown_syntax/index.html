@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+<meta charset='utf-8'>
+<meta content='initial-scale=1.0' name='viewport'>
+<meta content='yes' name='apple-mobile-web-app-capable'>
+<meta content='black' name='apple-mobile-web-app-status-bar-style'>
+
+<title></title>
+<link href="../../stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../../stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../../stylesheets/pygment_trac.css" media="screen" rel="stylesheet" type="text/css" />
+<link href='favicon.ico' rel='shortcut icon'>
+<link href='touch-icon-iphone.png' rel='apple-touch-icon'>
+<link href='touch-icon-ipad.png' rel='apple-touch-icon' sizes='72x72'>
+<link href='touch-icon-iphone-retina.png' rel='apple-touch-icon' sizes='114x114'>
+<link href='touch-icon-ipad-retina.png' rel='apple-touch-icon' sizes='144x144'>
+
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body class=''>
+<div class='wrapper'>
+<header>
+<h1 class='title'>
+<a href='/KOS_DOC/'>
+kOS
+</a>
+</h1>
+</header>
+<div id='container'>
+<p class='tagline'>Fully programmable autopilot mod for KSP. Originally By Nivekk</p>
+<div id='main' role='main'>
+<div class='download-bar'>
+<div class='inner'>
+<a class='download-button spaceport' href='http://kerbalspaceport.com/kos-autopilot/'>
+<span>Spaceport</span>
+</a>
+<a class='download-button reddit' href='http://www.reddit.com/r/KOS_DOC/'>
+<span>Reddit</span>
+</a>
+<a class='download-button forum' href='http://forum.kerbalspaceprogram.com/threads/68089'>
+<span>Forum</span>
+</a>
+<a class='code' href='https://github.com/KSP-KOS/KOS'>
+View kOS on GitHub
+</a>
+</div>
+</div>
+<span class='blc'></span>
+<span class='trc'></span>
+<article class='markdown-body'>
+<h1 id="the-markdown-syntax-used-in-kosdoc">The Markdown Syntax used in KOS_DOC</h1>
+
+<p>These are the basic simple markdown formattings used in the kOS documentation:</p>
+
+<h3 id="paragraphing">Paragraphing</h3>
+
+<p>Like with HTML, if you make a line break it doesn't mean anything and gets ignored.
+If you make an empty line with nothing on it, however, it will create a paragraph
+break at that point.</p>
+
+<h3 id="font-faces">Font Faces</h3>
+
+<ul>
+  <li><em>empahsis (Italics)</em> : To create italicised emphasis, surround the section with single asterisks or single underscores.</li>
+  <li><strong>strong (Boldface)</strong> : To create strong text (bold), surround the section with double asterisks or double underscores.</li>
+</ul>
+
+<p>Examples: </p>
+
+<pre><code>- *These words* are in empahsis (italics) face, and _these words_ are also in empahsis (italics) face.
+- **These words** are in strong (bold) face, and __these words__ are also in strong (bold) face.
+</code></pre>
+
+<p>Examples Rendered:</p>
+
+<ul>
+  <li><em>These words</em> are in empahsis (italics) face, and <em>these words</em> are also in empahsis (italics) face.</li>
+  <li><strong>These words</strong> are in strong (bold) face, and <strong>these words</strong> are also in strong (bold) face.</li>
+</ul>
+
+<h3 id="headings">Headings</h3>
+
+<p>To make a header suitable for the top of a page, put a line of "—-" under it or a line of "====" under it.</p>
+
+<p>To make a smaller header suitable for the middle of a page, preceed it with three '###' in colum 1.</p>
+
+<p>Examples:</p>
+
+<pre><code>This is a header
+================
+
+This is also a header
+---------------------
+
+### This is a smaller header.
+</code></pre>
+
+<p>For a heading to render correctly, it must be a separate paragraph (surrounded above and below
+by blank lines).</p>
+
+<p>Please note that the headers are also usable as HTML Anchors in URLS to jump to the middle of the
+page.  Any spaces in the header become underscores in the HTML anchor.</p>
+
+<h3 id="code-blocks-unparsed-sections">Code blocks (unparsed sections)</h3>
+
+<p>To make a block in which Markdown will not be parsed, for the purpose of literal code examples,
+there are two ways to do it:</p>
+
+<p><em>Indented</em> : Indent the section 4 spaces to force it to be literal code.</p>
+
+<p><em>Surround with tilde lines</em> : Put a line of 4 tilde's above and below the section.</p>
+
+<p>Examples:</p>
+
+<pre><code>Here's an example indented 4 spaces to trigger a literal code block:
+
+    example code
+    lines here
+
+Here's an example surrounded by 4 tilde's above and below to trigger a literal code block:
+
+~~~~
+
+example code
+lines here
+
+~~~~
+</code></pre>
+
+<h3 id="tables">Tables</h3>
+
+<p>To make a table , just make sure you put vertical bars in it to separate the cells:</p>
+
+<p>Example:</p>
+
+<pre><code>aaaa | bbbb
+cccc | dddd
+</code></pre>
+
+<table>
+  <tbody>
+    <tr>
+      <td>aaaa</td>
+      <td>bbbb</td>
+    </tr>
+    <tr>
+      <td>cccc</td>
+      <td>dddd</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To put a header on the first row, make a separator between it and the other rows consisting of "cells" of "===", like so:</p>
+
+<p>Example:</p>
+
+<pre><code>column 1 | column 2
+=========|==========
+aaaa | bbbb
+cccc | dddd
+</code></pre>
+
+<table>
+  <tbody>
+    <tr>
+      <td>column 1</td>
+      <td>column 2</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>aaaa</td>
+      <td>bbbb</td>
+    </tr>
+    <tr>
+      <td>cccc</td>
+      <td>dddd</td>
+    </tr>
+  </tfoot>
+</table>
+
+<h3 id="links">Links</h3>
+
+<p>To make a link with a URL, put square brackets around the visible text, followed by parentheses around the link URL, like this:</p>
+
+<pre><code>Please [click here](www.google.com) to go to google.
+</code></pre>
+
+<h3 id="image-links">Image links</h3>
+
+<p>To embed an image file, make a link to it as above, but preceed it with an exclamation mark.  The text
+in the square brackets is the alt text used by the browser for tooltips or visually impared users:</p>
+
+<pre><code>Please see the image below for a screenshot:
+![a screenshot of my kOS window](../images/myscreenshot.png)
+</code></pre>
+
+<h3 id="important-note-about-links-and-middleman">IMPORTANT NOTE ABOUT LINKS AND MiddleMan!</h3>
+
+<p>MiddleMan transforms all files called .md into directories with an index.html inside them.  For example, a directory structure like this in the source file:</p>
+
+<pre><code>source/
+  |
+  +-- dir1/
+  |     |
+  |     +-- file1.md
+  |     |
+  |     +-- file2.md
+  |
+  `-- dir2/
+        |
+        `-- file3.md
+</code></pre>
+
+<p>Would turn into this in the build directory:</p>
+
+<pre><code>build/
+  |
+  +-- dir1/
+  |     |
+  |     +-- file1/
+  |     |     |
+  |     |     `-- index.html
+  |     |
+  |     +-- file2/
+  |     |     |
+  |     |     `-- index.html
+  |
+  `-- dir2/
+        |
+        `-- file3/
+              |
+              `-- index.html
+</code></pre>
+
+<p>Therefore remember that all relative links need an extra ".." in them!!  If you want to link
+to file2.md from file1.md in the example above, you'd need to link to ../file2/index.html even
+though file1.md and file2.md are in the same directory.</p>
+
+<h3 id="but-why-use-indexhtml-at-all">But why use index.html at all?</h3>
+
+<p>You might be thinking that linking to the index.html is a bad idea then, and we should just
+link to the folder, letting the browser default to the index.html inside that folder.</p>
+
+<p>The reason this is not done is that it makes it hard to view the file using a local
+file:/// url, where a local browser will often not automatically look for an index.html given
+just the directory name like a web server would.</p>
+
+
+</article>
+</div>
+</div>
+<footer>
+<div class='owner'>
+<p>
+<a class='avatar' href='https://github.com/erendrake'>
+<img height='48px' src='https://0.gravatar.com/avatar/165af1182d7a820a7dacba19befc2e9c?d=https%3A%2F%2Fidenticons.github.com%2Fdb79977913a22100d5b0a7622deb2905.png&amp;amp;r=x&amp;amp;s=60' width='48px'>
+</a>
+<a href='https://github.com/erendrake'>
+erendrake
+</a>
+maintains
+<a href='https://github.com/KSP-KOS/KOS'>
+kOS
+</a>
+</p>
+</div>
+</footer>
+<div class='current-section'>
+<a href='#top'>
+Scroll to top
+</a>
+<p class='name'></p>
+</div>
+</div>
+<script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+<script src="../../javascripts/application.js" type="text/javascript"></script>
+<script src="../../javascripts/script.js" type="text/javascript"></script>
+</body>
+</html>
