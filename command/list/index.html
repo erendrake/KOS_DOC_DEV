@@ -128,7 +128,7 @@ the <a href="../../command/flowControl/index.html#for">FOR loop, explained on th
 <p>These generate lists about the files in the system:</p>
 
 <ul>
-  <li><em>Files</em> - List the files on the current Volume. (note below)</li>
+  <li><em>Files</em> - List the <a href="../../structure/fileinfo/index.html">files</a> on the current Volume. (note below)</li>
   <li><em>Volumes</em> - List all the Volumes that exist.</li>
 </ul>
 
@@ -138,8 +138,15 @@ the <a href="../../command/flowControl/index.html#for">FOR loop, explained on th
 
 <pre><code>LIST.  // Prints the list of files on current volume.
 LIST FILES.  // Does the same exact thing, but more explicitly.
+LIST VOLUMES. // which volumes can be seen by this CPU?
+LIST FILES IN fileList. // fileList is now a LIST() containing file structures.
+</code></pre>
 
-LIST BODIES. // Prints the list of all Celestail bodies in the system.
+<p>The file structures returned by LIST FILES IN FILELIST are documented <a href="../../structure/fileinfo/index.html">on a separate page</a>.</p>
+
+<p>Eamples:</p>
+
+<pre><code>LIST BODIES. // Prints the list of all Celestail bodies in the system.
 
 LIST BODIES IN bodList.  // Puts the list of bodies into a variable.
 // Iterate over everything in the list:

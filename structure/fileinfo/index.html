@@ -53,19 +53,13 @@ View kOS on GitHub
 <span class='blc'></span>
 <span class='trc'></span>
 <article class='markdown-body'>
-<h1 id="vesselsensors">VesselSensors</h1>
+<h1 id="fileinfo">FILEINFO</h1>
 
-<p>When you ask a Vessel to tell you its :SENSORS suffix, it returns an object of this type.</p>
+<p>File name and size information.</p>
 
-<p>This is a snapshot of the following sensor data taken at the moment the sensor reading
-was taken (at the moment you said SomeVessel:SENSORS).</p>
+<p>You can obtain a list of values of type FileInfo using the <a href="../../command/list/index.html#file-system-lists">LIST FILES</a> command.</p>
 
-<p><strong>NOTE:</strong> These values are only enabled <strong>if you have the proper type of sensor</strong> onboard the vessel.
-If you don't have a thermoneter, for example, then the :TEMP suffix will always read zero.</p>
-
-<p>If you store this in a variable and wait, the numbers are frozen in time and won't change as the vessel's condition changes.</p>
-
-<h3 id="structure">Structure</h3>
+<h1 id="structure">Structure</h1>
 
 <table>
   <thead>
@@ -79,44 +73,41 @@ If you don't have a thermoneter, for example, then the :TEMP suffix will always 
   </thead>
   <tbody>
     <tr>
-      <td>:ACC</td>
-      <td><a href="../vector/index.html">Vector</a></td>
+      <td>:NAME</td>
+      <td>String</td>
       <td>yes</td>
       <td>no</td>
-      <td>Accelleration the vessel is undergoing.  A combination of both the gravitational pull and the engine thrust.</td>
+      <td>name of the file.</td>
     </tr>
     <tr>
-      <td>:PRES</td>
+      <td>:SIZE</td>
       <td>Number</td>
       <td>yes</td>
       <td>no</td>
-      <td>The current pressure of this ship.</td>
-    </tr>
-    <tr>
-      <td>:TEMP</td>
-      <td>Number</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>The current temperature.</td>
-    </tr>
-    <tr>
-      <td>:GRAV</td>
-      <td>Vector</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>Magnitude and direction of gravity acceleration where the vessel currently is.  Magnitude is expressed in "G"'s (multiples of 9.802 m/s^2).</td>
-    </tr>
-    <tr>
-      <td>:LIGHT</td>
-      <td>Number</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>The total amount of sun exposure that exists here - only readable if there are solar panels on the vessel.</td>
+      <td>size of the file.</td>
     </tr>
   </tbody>
 </table>
 
-<p><strong>BUG:</strong> This information is currenlty being read from the Active Vessel even when the Active Vessel is not the <a href="../../summary_topics/CPU_vessel/index.html">CPU Vessel</a>.  This comment will be removed when that bug is fixed.</p>
+<p>Example:</p>
+
+<pre><code>// This example checks if a file exists on the current volume.
+DECLARE PARAMETER searchFile.
+LIST FILES IN fileList.
+SET exists to FALSE.
+
+FOR file IN fileList {
+    IF file:NAME = searchFile {
+        set exists to TRUE.
+    }
+}
+
+IF exists {
+    PRINT searchFile + " exists".
+} ELSE {
+    PRINT searchFile + " does not exist".
+}
+</code></pre>
 
 
 </article>
