@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+<meta charset='utf-8'>
+<meta content='initial-scale=1.0' name='viewport'>
+<meta content='yes' name='apple-mobile-web-app-capable'>
+<meta content='black' name='apple-mobile-web-app-status-bar-style'>
+
+<title></title>
+<link href="../../stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../../stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../../stylesheets/pygment_trac.css" media="screen" rel="stylesheet" type="text/css" />
+<link href='favicon.ico' rel='shortcut icon'>
+<link href='touch-icon-iphone.png' rel='apple-touch-icon'>
+<link href='touch-icon-ipad.png' rel='apple-touch-icon' sizes='72x72'>
+<link href='touch-icon-iphone-retina.png' rel='apple-touch-icon' sizes='114x114'>
+<link href='touch-icon-ipad-retina.png' rel='apple-touch-icon' sizes='144x144'>
+
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body class=''>
+<div class='wrapper'>
+<header>
+<h1 class='title'>
+<a href='/KOS_DOC/'>
+kOS
+</a>
+</h1>
+</header>
+<div id='container'>
+<p class='tagline'>Fully programmable autopilot mod for KSP. Originally By Nivekk</p>
+<div id='main' role='main'>
+<div class='download-bar'>
+<div class='inner'>
+<a class='download-button spaceport' href='http://kerbalspaceport.com/kos-autopilot/'>
+<span>Spaceport</span>
+</a>
+<a class='download-button reddit' href='http://www.reddit.com/r/KOS_DOC/'>
+<span>Reddit</span>
+</a>
+<a class='download-button forum' href='http://forum.kerbalspaceprogram.com/threads/68089'>
+<span>Forum</span>
+</a>
+<a class='code' href='https://github.com/KSP-KOS/KOS'>
+View kOS on GitHub
+</a>
+</div>
+</div>
+<span class='blc'></span>
+<span class='trc'></span>
+<article class='markdown-body'>
+<h1 id="kerboscript-syntax-breakdown">kerboscript Syntax breakdown</h1>
+
+<p>This describes what is and is not a syntax error in the Kerboscript
+programming language.  It does not describe what function calls
+exist or which commands and built-in variables are present.
+Those are contained in other documents.</p>
+
+<h2 id="general-rules">General rules</h2>
+
+<p><strong>Whitespace</strong> consisting of consecutive spaces, tabs, and line breaks
+are all considered identical to each other.  Because of this, indentation is up to you.  You may indent however you like.</p>
+
+<p>Statements are ended with a <strong>period</strong> character (".").</p>
+
+<p>The following are <strong>reserved command keywords</strong> and special
+operator symbols:</p>
+
+<pre><code>**Arithmetic:**
+  +  -  *  /  ^  e  (  )
+
+**Logic:**
+  not  and  or  true  false  &lt;&gt;  &gt;=  &lt;=  =  &gt;  &lt;
+
+**Instructions and keywords:**
+  set  to  if  else  until  lock  unlock  print  at  on  toggle
+  wait  when  then  off  stage  clearscreen  add  remove  log
+  break  preserve  declare  parameter  switch  copy  from  rename
+  volume  file  delete  edit  run  compile  list  reboot  shutdown
+  for  unset  batch  deploy  in  all
+
+**Other symbols:**
+  {  }  [  ]  ,  :  //
+</code></pre>
+
+<p><strong>Comments</strong> consist of everything from a "//" symbol to the end of
+the line.</p>
+
+<pre><code>set x to 1. // this is a comment.
+</code></pre>
+
+<p><strong>Identifiers</strong>: Identifiers consist of: a string of (letter, digit, or underscore).
+The first character must be a letter.  The rest may be letters,
+digits or underscores.  <strong>Identifiers are case-insensitive</strong>.  The
+following are identical identifiers:</p>
+
+<pre><code>My_Variable  my_varible  MY_VARAIBLE
+</code></pre>
+
+<p><strong>case-insensitivity</strong>: The same case-insensitivity applies throughout the entire language,
+with all keywords except when comparing literal strings.  The
+values inside the strings are still case-sensitive, for example, the
+following will print "unequal":</p>
+
+<pre><code>if "hello" = "HELLO" { print "equal". } else { print "unequal". }.
+</code></pre>
+
+<p><strong>Suffixes</strong>: Some variable types are structures that contain
+sub-portions.  The separator between the main variable and the 
+item inside it is a colon character (":").  When this symbol is used,
+the part on the righthand side of the colon is called the "suffix".</p>
+
+<pre><code>list parts in mylist.
+print mylist:length. // In this case "length" is a "suffix of mylist".
+</code></pre>
+
+<p>Suffixes can be chained together, as in this example:</p>
+
+<pre><code>print ship:velocity:orbit:x;
+</code></pre>
+
+<p>In the above example you'd say "velocity is a suffix of ship", and "orbit
+is a suffix of ship:velocity", and "x is a suffix of ship:velocity:orbit".</p>
+
+<h2 id="calling-functions">Calling functions</h2>
+
+<p>There exist a number of built-in functions you can call using their
+names.  When you do so, you can do it like so:</p>
+
+<ul>
+  <li>functionName( <em>arguments with commas between them</em> ).</li>
+</ul>
+
+<p>For example, the ROUND function takes 2 arguments, like so:</p>
+
+<pre><code>print ROUND(1230.12312,2).
+</code></pre>
+
+<p>The SIN function takes 1 argument, like so:</p>
+
+<pre><code>print SIN(45).
+</code></pre>
+
+<p>When a function requires zero arguments, it is legal to call it
+using the parentheses or not using them.  You can pick either way.</p>
+
+<pre><code>// These both work:
+CLEARSCREEN.
+CLEARSCREEN().
+</code></pre>
+
+<h3 id="suffixes-that-are-functions-methods">Suffixes that are functions (methods)</h3>
+
+<p>Some suffixes are actually functions you can call.  When that is
+the case, these suffixes are called "method suffixes".  Here
+are some examples:</p>
+
+<pre><code>set x to ship:partsnamed("rtg").
+print x:length().
+x:remove(0).
+x:clear().
+</code></pre>
+
+<h2 id="flow-control">Flow control</h2>
+
+<p>Flow control statements are <a href="../flowControl/index.html">described in a separate document</a></p>
+
+<h1 id="what-does-not-exist-yet">What does not exist (yet?)</h1>
+
+<p>Concepts that many other languages have, that are missing from kerboscript,
+are listed below.  Many of these are things that could be supported
+some day, but at the moment with the limited amount of developer time
+available they haven't become essential enough to spend the time on
+supporting them.</p>
+
+<ul>
+  <li>
+    <p><strong>user-made functions</strong> - There are built-in functions you can call, but
+you can't make your own in the script.  The closest you can come to this
+is to make a separate script file and you can RUN the script file from
+another script file.</p>
+  </li>
+  <li>
+    <p><strong>local variables</strong> - All variables are in the same global namespace.
+You can't make local variables.  If homemade functions are ever supported,
+that is when local variables would become useful.</p>
+  </li>
+  <li>
+    <p><strong>user-made structures or classes</strong> - Several of the built-in variables
+of kOS are essentially "classes" with methods and fields, however there's
+currently no way for user code to create its own classes or structures.
+Supporting this would open up a <em>large</em> can of worms, as it would then
+make the kOS system more complex.</p>
+  </li>
+</ul>
+
+
+</article>
+</div>
+</div>
+<footer>
+<div class='owner'>
+<p>
+<a class='avatar' href='https://github.com/erendrake'>
+<img height='48px' src='https://0.gravatar.com/avatar/165af1182d7a820a7dacba19befc2e9c?d=https%3A%2F%2Fidenticons.github.com%2Fdb79977913a22100d5b0a7622deb2905.png&amp;amp;r=x&amp;amp;s=60' width='48px'>
+</a>
+<a href='https://github.com/erendrake'>
+erendrake
+</a>
+maintains
+<a href='https://github.com/KSP-KOS/KOS'>
+kOS
+</a>
+</p>
+</div>
+</footer>
+<div class='current-section'>
+<a href='#top'>
+Scroll to top
+</a>
+<p class='name'></p>
+</div>
+</div>
+<script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+<script src="../../javascripts/application.js" type="text/javascript"></script>
+<script src="../../javascripts/script.js" type="text/javascript"></script>
+</body>
+</html>
