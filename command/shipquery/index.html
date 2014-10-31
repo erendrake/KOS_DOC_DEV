@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+<meta charset='utf-8'>
+<meta content='initial-scale=1.0' name='viewport'>
+<meta content='yes' name='apple-mobile-web-app-capable'>
+<meta content='black' name='apple-mobile-web-app-status-bar-style'>
+
+<title></title>
+<link href="../../stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../../stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../../stylesheets/pygment_trac.css" media="screen" rel="stylesheet" type="text/css" />
+<link href='favicon.ico' rel='shortcut icon'>
+<link href='touch-icon-iphone.png' rel='apple-touch-icon'>
+<link href='touch-icon-ipad.png' rel='apple-touch-icon' sizes='72x72'>
+<link href='touch-icon-iphone-retina.png' rel='apple-touch-icon' sizes='114x114'>
+<link href='touch-icon-ipad-retina.png' rel='apple-touch-icon' sizes='144x144'>
+
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body class=''>
+<div class='wrapper'>
+<header>
+<h1 class='title'>
+<a href='/KOS_DOC/'>
+kOS
+</a>
+</h1>
+</header>
+<div id='container'>
+<p class='tagline'>Fully programmable autopilot mod for KSP. Originally By Nivekk</p>
+<div id='main' role='main'>
+<div class='download-bar'>
+<div class='inner'>
+<a class='download-button spaceport' href='http://kerbalspaceport.com/kos-autopilot/'>
+<span>Spaceport</span>
+</a>
+<a class='download-button reddit' href='http://www.reddit.com/r/KOS_DOC/'>
+<span>Reddit</span>
+</a>
+<a class='download-button forum' href='http://forum.kerbalspaceprogram.com/threads/68089'>
+<span>Forum</span>
+</a>
+<a class='code' href='https://github.com/KSP-KOS/KOS'>
+View kOS on GitHub
+</a>
+</div>
+</div>
+<span class='blc'></span>
+<span class='trc'></span>
+<article class='markdown-body'>
+<h1 id="querying-a-vessels-parts">Querying a vessel's parts</h1>
+
+<p>This is a quick list to get the idea across fast.  The actual
+details of the meaning of these things is complex enough to
+warrant <a href="../../summary_topics/vesselpartquery/index.html">its own tutorial topic</a>.</p>
+
+<p>To get the parts of a vessel (such as your current vessel,
+called SHIP), you can do the following things:</p>
+
+<p>These are equivalent. They get the full list of all the parts:</p>
+
+<pre><code>LIST PARTS IN MyPartList.
+SET MyPartlist TO SHIP:PARTS.
+</code></pre>
+
+<p>This gets all the parts that have the same part name:</p>
+
+<pre><code>SET MyPartList to SHIP:PARTSNAMED("something").
+</code></pre>
+
+<p>This gets all the Modules that hvae the same module name:</p>
+
+<pre><code>SET MyModList to SHIP:MODULESNAMED("something").
+</code></pre>
+
+<p>This gets all the parts that have been defined to have some sort
+of activity occur from a particular action group:</p>
+
+<pre><code>SET MyPartList to SHIP:PARTSINGROUP( AG1 ). // all the parts in action group 1.
+</code></pre>
+
+<p>This gets all the modules that have been defined to have some sort
+of activity occur from a particular action group:</p>
+
+<pre><code>SET MyModList to SHIP:MODULESINGROUP( AG1 ). // all the parts in action group 1.
+</code></pre>
+
+<p>This gets the primary root part of a vessel (the command core that you
+placed FIRST when building the ship in the VAB or SPH):</p>
+
+<pre><code>SET firstPart to SHIP:ROOTPART.
+</code></pre>
+
+<p>This lets you query all the parts that are immediate children of the
+current part in the tree:</p>
+
+<pre><code>SET firstPart to SHIP:ROOTPART.
+FOR P IN firstPart:CHILDREN {
+  print "The root part as an immediately attached part called " + P:NAME.
+}.
+</code></pre>
+
+<p>You could keep walking down the tree this way, or go upward with PARENT
+and HASPARENT:</p>
+
+<pre><code>IF thisPart:HASPARENT {
+  print "This part's parent part is "+ thisPart:PARENT:NAME.
+}.
+</code></pre>
+
+<p>This tree method of walking the parts is slightly less useful because user
+functions don't exist, making recursive algorithms messy to implement.</p>
+
+
+</article>
+</div>
+</div>
+<footer>
+<div class='owner'>
+<p>
+<a class='avatar' href='https://github.com/erendrake'>
+<img height='48px' src='https://0.gravatar.com/avatar/165af1182d7a820a7dacba19befc2e9c?d=https%3A%2F%2Fidenticons.github.com%2Fdb79977913a22100d5b0a7622deb2905.png&amp;amp;r=x&amp;amp;s=60' width='48px'>
+</a>
+<a href='https://github.com/erendrake'>
+erendrake
+</a>
+maintains
+<a href='https://github.com/KSP-KOS/KOS'>
+kOS
+</a>
+</p>
+</div>
+</footer>
+<div class='current-section'>
+<a href='#top'>
+Scroll to top
+</a>
+<p class='name'></p>
+</div>
+</div>
+<script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+<script src="../../javascripts/application.js" type="text/javascript"></script>
+<script src="../../javascripts/script.js" type="text/javascript"></script>
+</body>
+</html>
