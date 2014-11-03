@@ -80,6 +80,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <th>Type</th>
       <th>Get</th>
       <th>Set</th>
+      <th>Method Arguments</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -89,6 +90,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>varies</td>
       <td>..</td>
       <td>..</td>
+      <td>varies</td>
       <td>Vessel is a type of <a href="../orbitable/index.html">Orbitable</a> and therefore every suffix of Orbitable is also a suffix of VESSEL too.  Read the Orbitable page to see that list of suffixes.  This table below only contains the suffixes that are unique to Vessel</td>
     </tr>
     <tr>
@@ -96,6 +98,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td><a href="../control/index.html">Control</a></td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>The structure represending the raw flight controls for the vessel.</td>
     </tr>
     <tr>
@@ -103,6 +106,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>Number</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td><em>relative</em> compass heading (degrees) to this vessel from the <a href="../../summary_topics/CPU_Vessel/index.html">CPU Vessel</a>, taking into account the CPU Vessel's own heading.</td>
     </tr>
     <tr>
@@ -110,6 +114,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>Number</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td><em>absolule</em> compass heading (degrees) to this vessel from the <a href="../../summary_topics/CPU_Vessel/index.html">CPU Vessel</a></td>
     </tr>
     <tr>
@@ -117,6 +122,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>Number</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>Sum of all the Max thrust of all the currently active engines  In Kilonewtons.</td>
     </tr>
     <tr>
@@ -125,12 +131,14 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>yes</td>
       <td>no</td>
       <td>The way the vessel is pointed.</td>
+      <td> </td>
     </tr>
     <tr>
       <td>:MASS</td>
       <td>Number (metric tons)</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>The mass of the ship</td>
     </tr>
     <tr>
@@ -138,6 +146,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>Number (meters/s)</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>How fast the ship is moving. in the "up" direction relative to the  SOI Body's sea level surface.</td>
     </tr>
     <tr>
@@ -145,6 +154,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>Number (meters/s)</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>How fast the ship is moving in the plane horizontal to the SOI body's sea level surface.</td>
     </tr>
     <tr>
@@ -152,6 +162,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>Number (meters/s)</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>How fast the ship is moving relative to the air.  KSP models atmosphere as simply a solid block of air "glued" to the planet surface (the weather on Kerbin is boring and there's no wind).  Therefore airspeed is generally the same thing as as the magnitude of the surface velocity.</td>
     </tr>
     <tr>
@@ -159,6 +170,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>Number (meters/s)</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>terminal velocity of the vessel in freefall through atmosphere, based on the vessel's current altitude above sea level, and its drag properties.  Warning, can cause values of Infinity if used in a vacuum, and kOS sometimes does not let you store Infinity in a variable.</td>
     </tr>
     <tr>
@@ -166,6 +178,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>string</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>The name of the vessel as it appears in the tracking station.</td>
     </tr>
     <tr>
@@ -173,6 +186,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td><a href="../direction/index.html">Direction</a></td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>Given in [SHIP-RAW reference frame]](../../ref_frame/index.html).  Despite the name, this is technically not momentum information because it has no magnitude.</td>
     </tr>
     <tr>
@@ -180,6 +194,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td><a href="../direction/index.html">Direction</a></td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>Given in [SHIP-RAW reference frame]](../../ref_frame/index.html).  Despite the name, this is technically not a velocity.  It only tells you the axis of rotation, not the speed of rotation around that axis.</td>
     </tr>
     <tr>
@@ -187,6 +202,7 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td><a href="../vesselsensors/index.html">VesselSensors</a></td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>Structure holding summary information of sensor data for the vessel</td>
     </tr>
     <tr>
@@ -195,10 +211,66 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>get</td>
       <td>set</td>
       <td>true if the vessel is fully loaded into the complete KSP physics engine (false if it's "on rails").</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>:PATCHES</td>
+      <td><a href="../list/index.html">LIST</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>zero args</td>
+      <td>The list of <a href="../orbit/index.html">orbit patches</a> that describe this vessel's current travel path based on momentum alone with no thrusting changes.  If the current path has no transitions to other bodies, then this will be a list of only one orbit.  If the current path intersects other bodies, then this will be a list describing the transitions into and out of the intersecting body's sphere of influence.  SHIP:PATCHES[0] is always exactly the same as SHIP:OBT, SHIP:PATCHES[1] is the same as SHIP:OBT:NEXTPATCH, SHIP:PATCHES[2] is the same as SHIP:OBT:NEXTPATCH:NEXTPATCH, and so on.  Note that you will only see as far into the future as your KSP settings allow.  (See the setting CONIC_PATCH_LIMIT in your settings.cfg file)</td>
+    </tr>
+    <tr>
+      <td>:ROOTPART</td>
+      <td><a href="../part/index.html">Part</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>zero args</td>
+      <td>The first <a href="../part/index.html">part</a> that was used to begin the ship design - the command core.  Vessels in KSP are built in a tree-structure, and the first part that was placed is the root of that tree.</td>
+    </tr>
+    <tr>
+      <td>:PARTS</td>
+      <td><a href="../list/index.html">LIST</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>zero args</td>
+      <td>A List of all the <a href="../part/index.html">parts</a> on the vessel.  SET FOO TO SHIP:PARTS has exactly the same effect as LIST PARTS IN FOO. For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
+    </tr>
+    <tr>
+      <td>:PARTSNAMED</td>
+      <td><a href="../list/index.html">LIST</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>1 arg:<br />partname [string]</td>
+      <td>Gets a list of all the <a href="../part/index.html">parts</a> that match the given name.  The matching is done case-insensitively. For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
+    </tr>
+    <tr>
+      <td>:MODULESNAMED</td>
+      <td><a href="../list/index.html">LIST</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>1 arg:<br />modulename [string]</td>
+      <td>Gets a list of all the <a href="../partmodule/index.html">PartModules</a> that match the given name.  The matching is done case-insensitively. For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
+    </tr>
+    <tr>
+      <td>:PARTSINGROUP</td>
+      <td><a href="../list/index.html">LIST</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>1 arg:<br />actionGroupName [bareword identifier]</td>
+      <td>Gets a list of all the <a href="../part/index.html">parts</a> which have at least one action triggered by the given action group. For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
+    </tr>
+    <tr>
+      <td>:MODULESINGROUP</td>
+      <td><a href="../list/index.html">LIST</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>1 arg:<br />actionGroupName [bareword identifier]</td>
+      <td>Gets a list of all the <a href="../partmodule/index.html">PartModules</a> which have at least one action triggered by the given action group. For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
     </tr>
   </tbody>
 </table>
-
 
 </article>
 </div>

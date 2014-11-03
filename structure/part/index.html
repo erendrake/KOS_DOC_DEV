@@ -68,6 +68,7 @@ View kOS on GitHub
       <th>Type</th>
       <th>Get</th>
       <th>Set</th>
+      <th>Method Arguments</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -77,6 +78,7 @@ View kOS on GitHub
       <td>String</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>name of part.</td>
     </tr>
     <tr>
@@ -84,6 +86,7 @@ View kOS on GitHub
       <td>Number</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>the stage this part is part of.</td>
     </tr>
     <tr>
@@ -91,6 +94,7 @@ View kOS on GitHub
       <td>Number</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>All parts have a unique ID number.  Test if two parts are the same part by seeing if this is the same between them.</td>
     </tr>
     <tr>
@@ -98,20 +102,31 @@ View kOS on GitHub
       <td><a href="../list/index.html">List</a></td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>list of the <a href="../resource/index.html">ResourceValues</a> in this part.</td>
     </tr>
     <tr>
       <td>:MODULES</td>
-      <td><a href="../list/index.html">List</a></td>
+      <td><a href="../list/index.html">List</a> of strings</td>
       <td>yes</td>
       <td>no</td>
-      <td>list of the module types enabled for this part.</td>
+      <td>zero args</td>
+      <td>list of the names of <a href="../partmodule/index.html">PartModules</a> enabled for this part.</td>
+    </tr>
+    <tr>
+      <td>:GETMODULE</td>
+      <td><a href="../partmodule/index.html">PartModule</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>one arg:<br />moduleName [string]</td>
+      <td>Get one of the <a href="../partmodule.html">PartModules</a> attached to this part, given the name of the module.  (See :MODULES for a list of all the mames available).</td>
     </tr>
     <tr>
       <td>:TARGETABLE</td>
       <td>Boolean</td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>true if this part can be selected by KSP as a target.</td>
     </tr>
     <tr>
@@ -119,6 +134,7 @@ View kOS on GitHub
       <td><a href="../vessel/index.html">Vessel</a></td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>the vessel that contains this part.</td>
     </tr>
     <tr>
@@ -126,6 +142,7 @@ View kOS on GitHub
       <td><a href="../direction/index.html">Direction</a></td>
       <td>yes</td>
       <td>no</td>
+      <td>zero args</td>
       <td>the direction that this part is facing.</td>
     </tr>
     <tr>
@@ -133,6 +150,7 @@ View kOS on GitHub
       <td>Boolean</td>
       <td>no</td>
       <td>yes</td>
+      <td>zero args</td>
       <td>Set to TRUE to cause the game to do the same thing as when you rightclick a part on a vessel and select "control from here" on the menu.  It rotates the control orientation so that fore/aft/left/right/up/down now match the orientation of this part.  NOTE that this will not work for every type of part.  It only works for those parts that KSP itself allows this for (control cores and docking ports).</td>
     </tr>
   </tbody>

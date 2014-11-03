@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+<meta charset='utf-8'>
+<meta content='initial-scale=1.0' name='viewport'>
+<meta content='yes' name='apple-mobile-web-app-capable'>
+<meta content='black' name='apple-mobile-web-app-status-bar-style'>
+
+<title></title>
+<link href="../../stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../../stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../../stylesheets/pygment_trac.css" media="screen" rel="stylesheet" type="text/css" />
+<link href='favicon.ico' rel='shortcut icon'>
+<link href='touch-icon-iphone.png' rel='apple-touch-icon'>
+<link href='touch-icon-ipad.png' rel='apple-touch-icon' sizes='72x72'>
+<link href='touch-icon-iphone-retina.png' rel='apple-touch-icon' sizes='114x114'>
+<link href='touch-icon-ipad-retina.png' rel='apple-touch-icon' sizes='144x144'>
+
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body class=''>
+<div class='wrapper'>
+<header>
+<h1 class='title'>
+<a href='/KOS_DOC/'>
+kOS
+</a>
+</h1>
+</header>
+<div id='container'>
+<p class='tagline'>Fully programmable autopilot mod for KSP. Originally By Nivekk</p>
+<div id='main' role='main'>
+<div class='download-bar'>
+<div class='inner'>
+<a class='download-button spaceport' href='http://kerbalspaceport.com/kos-autopilot/'>
+<span>Spaceport</span>
+</a>
+<a class='download-button reddit' href='http://www.reddit.com/r/kos/'>
+<span>Reddit</span>
+</a>
+<a class='download-button forum' href='http://forum.kerbalspaceprogram.com/threads/68089'>
+<span>Forum</span>
+</a>
+<a class='code' href='https://github.com/KSP-KOS/KOS'>
+View kOS on GitHub
+</a>
+</div>
+</div>
+<span class='blc'></span>
+<span class='trc'></span>
+<article class='markdown-body'>
+<h1 id="ship-parts-and-partmodules">Ship parts and PartModules</h1>
+
+<p>As of v0.15, kOS has introduced the ability to access the functionality
+of Parts' actions, and right-click context menus.  However, to understand
+how to use them it is necessary to first understand a little bit about
+the structure of parts in a vessel in Kerbal Space Program.</p>
+
+<p>In Kerbal Space Program, a Vessel is a collection of Parts arranged in
+a tree Structure.  In kOS, you can access the parts one of two ways:</p>
+
+<h1 id="tutorial">Tutorial:</h1>
+
+<p>If you prefer the tutorial approach to learning, the following links
+will walk you through a specific pair of tasks to introduce you to
+this system.  If you prefer a methodical reference approach, skip the
+tutorials and read on, then come back to the tutorials afterward.</p>
+
+<p>TODO: PUT LINKS POINTING TO A TUTORIAL WALKING THROUGH WHAT THIS IS TEACHING.</p>
+
+<p>THERE NEEDS TO BE TWO TUTORIALS MINIMUM:</p>
+
+<ol>
+  <li>
+    <p>A Tuturial made on an ONLY STOCK (other than kOS of course) install,
+using only STOCK parts to do something interesting.</p>
+  </li>
+  <li>
+    <p>A Tutorial more complex showing that this can be used with mods too,
+probably the Leg Leveller example from the teaser video, but with
+the code updated to use the newer part query methods.</p>
+  </li>
+</ol>
+
+<h1 id="reference">Reference:</h1>
+
+<h2 id="parts">Parts</h2>
+
+<p><img align="right" src="../../images/ship_parts_tree.png" /></p>
+
+<h3 id="accessing-the-parts-list-as-a-tree">Accessing the parts list as a tree</h3>
+
+<p>Starting from the root part, Vessel:ROOTPART (SHIP:ROOTPART, TARGET:ROOTPART,
+or Vessel("some ship name"):ROOTPART).  You can get all its children
+parts with the Part:CHILDREN suffix.  Given any Part, you can access
+its Parent part with Part:PARENT, and detect if it doesn't have a parent
+with Part:HASPARENT.  By walking this tree you can see how the parts are
+connected together.</p>
+
+<p>The diagram here shows an example of a small vessel and how it might
+get represented as a tree of parts in KSP.</p>
+
+<h3 id="accessing-the-parts-list-as-a-list">Accessing the parts list as a list</h3>
+
+<p>You can get a list of all the parts on a vessel using the suffix :PARTS,
+or by using the LIST PARTS IN command.  When you do this, the resulting list
+is a "flattening" of the tree of parts, created by use of a depth-first search
+starting from the root part.  In the diagram shown here, the red numbers
+indicate one possible way the parts might be represented in LIST indeces
+if you used SHIP:PARTS on such a vessel.  Note there is no guarantee it
+would look exactly like this, as it depends on exactly what order the parts
+were attached in the VAB. </p>
+
+<h3 id="shortcuts-to-smaller-lists-of-parts">Shortcuts to smaller lists of parts</h3>
+
+<p>If you know some of the properties of the parts you're interested in, you
+can ask kOS to give you a shorter list of parts that just includes those
+parts, using the following suffixes:</p>
+
+<p>Return a List of just the parts who's name is "someNameHere":</p>
+
+<pre><code>SET ves TO SHIP. // or Target or Vessel("ship name").
+SET PLIST TO ves:PARTSNAMED("someNameHere").
+</code></pre>
+
+<p>Return a List of just the parts that have had some sort of activity attached to action group 1:</p>
+
+<pre><code>SET ves TO SHIP. // or Target or Vessel("ship name").
+SET PLIST TO ves:PARTSINGROUP(AG1).
+</code></pre>
+
+<h2 id="partmodules-and-the-right-click-menu">PartModules and the right-click menu:</h2>
+
+<p>Each Part, in turn has a list of what are called <a href="../../structure/partmodule/index.html">PartModules</a>
+on it.  A PartModule is a collection of variables and executable program hooks that gives the part
+some of its behaviors and properties.  Without a PartModule, a part is really
+nothing more than a passive bit of structure that has nothing more than a shape,
+a look, and a strength to it.  Some of the parts in the "structure" tab of the
+parts bin, like pure I-beams and girders, are like this - they have no PartModules
+on them.  But all of the <em>interesting</em> parts you might want to do something with
+will have a PartModule on them.  Through PartModules, <strong>kOS will now allow you to manipulate
+or query anything that any KSP programmer, stock or mod, has added to the rightclick
+menu</strong>, or action group actions, for a part.</p>
+
+<h3 id="partmodules-stock-vs-mods">PartModules, Stock vs Mods:</h3>
+
+<p>It should be noted that even if you play an entirely stock installation of KSP
+(well, stock other than for kOS, obviously, otherwise you wouldn't be reading
+this), you will still have PartModules on your Parts.  Some people have muddied
+the terminology difference between "Mod" meaning "modification" and "Mod" meaning
+"module".  It should be made absolutely clear that PartModules are a feature
+of stock KSP, and BOTH stock KSP parts and Modded KSP Parts use them.  Even if
+all you want to do is affect the stock behavior of stock parts in a completely
+unmodded way, you'll still want to know about PartModules in order to do so.</p>
+
+<h3 id="partmodules-and-modulemanager-like-behavior">PartModules and ModuleManager-like behavior:</h3>
+
+<p>Some Mods (meaning "modifications" here) operate by adding a new PartModule to
+every single part in the game.  One example of such a mod is the Deadly Reentry
+mod.  In order to track how fragile each part is and how well it withstands
+re-entry heat, the Deadly Re-entry mod adds a small module to each part in
+the game, even the stock parts that would normally have no mods at all on them.</p>
+
+<p>Other Mods allow the user to add PartModule's to any part they feel like,
+through the use of the ModuleManager mod.  </p>
+
+<p>Because of these, it's impossible in this explanatory document to make blanket
+statements about which PartModules will exist on which Parts.  Everything that
+is said here needs to be taken with a grain of salt, as depending on the
+mods you've installed on your game, you may find PartModules on your parts
+that are not normally on those parts for most other players.</p>
+
+<h2 id="what-a-partmodule-means-to-a-kos-script">What a PartModule means to a kOS script</h2>
+
+<p>There are 3 ways that a kOS script may interface with a PartModule.</p>
+
+<p>TODO - TAKE SOME SCREENSHOTS TO PUT ALONGSIDE THIS TEXT, SHOWING
+EXAMPLES OF THESE THINGS IN THE USER INTERFACE.  WE NEED A SCREENSHOT
+THAT SHOWS BOTH A KSPFIELD AND A KSPEVENT IN A PART'S RMB CONTEXT
+MENU, A SCREENSHOT THAT SHOWS
+FIELDS COMING FROM MULTIPLE PARTMODULES, AND A SCREENSHOT SHOWING THE
+KSPACTIONS IN THE VAB ACTION EDITOR.</p>
+
+<h3 id="kspfields">KSPFields</h3>
+
+<p>A KSPField is a single variable that a PartModule attaches to a part.  Some
+of the KSPFields are also displayed in the RMB context menu of a part.  It has a
+current value, and if the field has had a "tweakable" GUI interface attached
+to it, then it's also a settable field by the user manipulating the field in
+the context menu.  In kOS, you can only access those KSPFields that are currently
+visible on the RMB context menu.  We, the developers of kOS, instituted this rule
+out of respect for the developers of other mods and the stock KSP game.  If
+they didn't allow the user to see or manipulate the variable directly in the GUI,
+then we shouldn't allow it to be manipulated or seen by a kOS script either.</p>
+
+<p>KSPFields are read or manipulated by the following two <a href="../../structure/partmodule/index.html">suffixes of PartModule</a></p>
+
+<ul>
+  <li>
+    <p>:GETFIELD("name of field").</p>
+  </li>
+  <li>
+    <p>:SETFIELD("name of field", new_value_for_field).</p>
+  </li>
+</ul>
+
+<p>Note, that these are suffixes of the partmodule and NOT suffixes of the Part itself.
+This is because two different PartModule's on the same Part might have used the
+same field name as each other, and it's important to keep them separate.</p>
+
+<h3 id="kspevents">KSPEvents</h3>
+
+<p>A KSPEvent, just like a KSPField, is a thing that a PartModule can put on the
+RMB context menu for a part.  The difference is that a KSPEvent does not 
+actually HAVE a value.  It's not a variable.  Rather it's just a button with
+a label next to it.  When you press the button, it causes some sort of
+software inside the PartModule to run.  An example of this is the "undock node"
+button you see on many of the docking ports.</p>
+
+<p><strong>Difference between a KSPEvent and a boolean KSPField</strong>: If you see a label
+next to a button in the RMB context menu, it might be a KSPEvent, OR it might
+be a boolean KSPField variable which is editable with a tweakable GUI.  They
+look exactly the same in the user interface.  To tell the difference, you 
+need to look at what happens when you click the button.  If clicking the
+button causes the button to depress inward and stay pressed in until you
+click it again, then this is a boolean value KSPField.  If clicking the
+button pops the button in and then it pops out again right away, then this
+is a KSPEvent instead.</p>
+
+<p>KSPEvents are manipulated by the following <a href="../../structure/partmodule/index.html">suffix of PartModule</a></p>
+
+<ul>
+  <li>:DOEVENT("name of event").</li>
+</ul>
+
+<p>This causes the event to execute once.</p>
+
+<h3 id="kspactions">KSPActions:</h3>
+
+<p>A KSPAction is a bit different from a KSPField or KSPEvent.  A KSPAction
+is like a KSPEvent in that it causes some software inside the PartModule to
+be run.  But it doesn't work via the RMB context menu for the part.  Instead
+KSPAction's are those things you see being made avaiable to you as options
+you can assign into an Action Group in the VAB or SPH.  When you have the
+action group editor tab enabled in the VAB or SPH, and then click on a part,
+that part asks all of its PartModules if they have any KSPActions they'd like
+to provide access to, and gathers all those answers and lists them in the user
+interface for you to select from and assign to the action group.</p>
+
+<p>kOS now allows you to access any of those actions without necessarily having
+had to assign them to any action groups if you didn't want to.</p>
+
+<p>KSPActions are manipulated by the following <a href="../../structure/partmodule/index.html">suffix of PartModule</a></p>
+
+<ul>
+  <li>:DOACTION("name of action", new_boolan_value).</li>
+</ul>
+
+<p>The name of the action is the name you see in the action group editor interface, 
+and the new boolean value is either True or False.  Unlike KSPEvents, a
+KSPAction has two states, true and false.  When you toggle the brakes, for
+example, they go from on to off, or from off to on.  When you call :DOACTION,
+you are specifying if the KSPAction should behave as if you have just toggled
+the group on, or just toggled the group off.  But instead of actually toggling
+an action group - you are just telling the single PartModule on a single Part
+to perform the same behavior it would have performed had that action been
+assigned to an action group.  You don't <em>actually</em> have to assign the action
+to an action group for this to work.</p>
+
+<h2 id="exploring-whats-there-to-find-fieldeventaction-names">Exploring what's there to find Field/Event/Action Names:</h2>
+
+<p>Okay, so you understand all that, but you're still thinking "but how do I KNOW
+what the names of part modules are, or what the names of the fields on them
+are?  I didn't write all that C# source code for all the modules."</p>
+
+<p>There are some additional suffixes that are designed to help you explore
+what's available so you can learn the answers to these questions. Also,
+some of the questions can be answered by other means:</p>
+
+<h3 id="what-partmodules-are-there-on-a-part">What PartModules are there on a part?</h3>
+
+<p>To answer this question you can do one of two things:</p>
+
+<p>A: <strong>Use the part.cfg file</strong> All parts in KSP come with a part.cfg file defining them,
+both for modded parts and stock parts.  If you look at this file, it will contain
+sections looking something like this:</p>
+
+<pre><code>// Example snippet from a Part.cfg file:
+MODULE
+{
+	name = ModuleCommand
+</code></pre>
+
+<p>That would tell you that this part has a PartModule on it called ModuleCommand. 
+there can be multiple such modules per part.  But it doesn't let you know
+about PartModules that get added afterward during runtime, by such things as
+the ModuleManager mod.</p>
+
+<p>B: <strong>Use the :MODULES suffix of Part:</strong> If you have a handle on any part
+in kOS, you can print out the value of :MODULES and it will tell you the string
+names of all the modules on the part.  For example:</p>
+
+<pre><code>FOR P IN SHIP:PARTS {
+  LOG ("MODULES FOR PART NAMED " + P:NAME) TO MODLIST.
+  LOG P:MODULES TO MODLIST.
+}.
+</code></pre>
+
+<p>Do that, and the file MODLIST should now contain a verbose dump of all the module
+names of all the parts on your ship.  You can get any of the modules now by 
+using Part:GETMODULE("module name").</p>
+
+<h3 id="what-are-the-names-of-the-stuff-that-a-partmodule-can-do">What are the names of the stuff that a PartModule can do?</h3>
+
+<p>These three suffixes tell you everything a part module can do:</p>
+
+<pre><code>SET MOD TO P:GETMODULE("some name here").
+LOG ("These are all the things that I can currently USE GETFIELD AND SETFIELD ON IN " + MOD:NAME + ":") TO NAMELIST.
+LOG MOD:ALLFIELDS TO NAMELIST.
+LOG ("These are all the things that I can currently USE DOEVENT ON IN " +  MOD:NAME + ":") TO NAMELIST.
+LOG MOD:ALLEVENTS TO NAMELIST.
+LOG ("These are all the things that I can currently USE DOACTION ON IN " +  MOD:NAME + ":") TO NAMELIST.
+LOG MOD:ALLACTIONS TO NAMELIST.
+</code></pre>
+
+<p>After that, the file NAMELIST would contain a dump of all the fields on this part module that you can use.</p>
+
+<h3 id="be-warned-names-are-able-to-dynamically-change">BE WARNED! Names are able to dynamically change!</h3>
+
+<p>Some PartModules are written to change the name of a field when something happens in the game.  For
+example, you might find that after you've done this:</p>
+
+<pre><code>SomeModule:DOEVENT("Activate").
+</code></pre>
+
+<p>That this doesn't work anymore after that, and the "Activate" event now causes an error.</p>
+
+<p>And the reason is that the PartModule chose to change the label on the event.  It changed to the word "Deactivate" now.
+kOS can no longer trigger an event called "Activate" because that's no longer its name.</p>
+
+<p>Be on the lookout for cases like this.  Experiment with how the context menu is being manipulated and keep in
+mind that the list of strings you got the last time you exectued :ALLFIELDS a few minutes ago might not be
+the same list you'd get if you ran it now, because the PartModule has changed what is being shown on the menu.</p>
+
+
+</article>
+</div>
+</div>
+<footer>
+<div class='owner'>
+<p>
+<a class='avatar' href='https://github.com/erendrake'>
+<img height='48px' src='https://0.gravatar.com/avatar/165af1182d7a820a7dacba19befc2e9c?d=https%3A%2F%2Fidenticons.github.com%2Fdb79977913a22100d5b0a7622deb2905.png&amp;amp;r=x&amp;amp;s=60' width='48px'>
+</a>
+<a href='https://github.com/erendrake'>
+erendrake
+</a>
+maintains
+<a href='https://github.com/KSP-KOS/KOS'>
+kOS
+</a>
+</p>
+</div>
+</footer>
+<div class='current-section'>
+<a href='#top'>
+Scroll to top
+</a>
+<p class='name'></p>
+</div>
+</div>
+<script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+<script src="../../javascripts/application.js" type="text/javascript"></script>
+<script src="../../javascripts/script.js" type="text/javascript"></script>
+</body>
+</html>
