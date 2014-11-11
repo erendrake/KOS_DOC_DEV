@@ -77,11 +77,12 @@ exists.  If SAS is on, kOS won't be able to turn the ship.  It is commmon for pe
 kOS scripts to explicitly start them with a use of the SAS OFF command just in case you
 forgot to turn it off before running the script.</p>
 
-<h1 id="there-are-two-styles-of-control">There are two styles of control:</h1>
+<h1 id="there-are-three-styles-of-control">There are three styles of control:</h1>
 
 <ul>
   <li>"Cooked" - Give a goal direction to seek, and let kOS find the way to manuever toward it.</li>
   <li>"Raw" - Control the craft just like a manual pilot would do from a keyboard or joystick.</li>
+  <li>"Pilot" - This is the stock way of controlling craft, the state of which can be read in kerboscript.</li>
 </ul>
 
 <h1 id="cooked-control">"Cooked" Control</h1>
@@ -204,6 +205,9 @@ neutral.  You can set to values smaller in magnitude than -1 and 1 for gentler c
   <li>YAW - rotate left/right, like pressing "A" and "D" on the keyboard.</li>
   <li>PITCH - rotate up/down, like pressing "W" and "S" on the keyboard.</li>
   <li>ROLL - tilt left/right, like pressing "Q" and "E" on the keyboard.</li>
+  <li>YAWTRIM - rotate left/right, like pressing "A" and "D" on the keyboard.</li>
+  <li>PITCHTRIM - rotate up/down, like pressing "W" and "S" on the keyboard.</li>
+  <li>ROLLTRIM - tilt left/right, like pressing "Q" and "E" on the keyboard.</li>
   <li>FORE - translate backward/forward, like pressing "N" and "H" on the keyboard.  Needs RCS ON to be effective.</li>
   <li>STARBOARD - translate left/right, like pressing "J" and "L" on the keybaord.  Needs RCS ON to be effective.</li>
   <li>TOP - translate up/down, like pressing "I" and "K" on the keybaord.  Needs RCS ON to be effective.</li>
@@ -255,6 +259,17 @@ player is locked out.  To give control back to the player you must execute:</p>
 <p>The control over RCS translation requires the use of Raw control.  Also, with raw control you can choose how
 gentle to be with the controls and it can be possible to control wobbly craft better with raw control than
 with cooked control.</p>
+
+<h1 id="pilot-controls">PILOT CONTROLS</h1>
+
+<p>This is not, strictly speaking, a method of controlling the craft. 'Pilot' controls are a way to read the input from the pilot. Most of these controls share the same name as their flight control, prefixed with PILOT (eg YAW and PILOTYAW)</p>
+
+<p>the one exception to this is the PILOTMAINTHROTTLE. This suffix has a setter and allows you to change the behavior of the throttle that persists even after the current program ends. </p>
+
+<pre><code>SET SHIP:CONTROLS:PILOTMAINTHROTTLE TO 0.
+</code></pre>
+
+<p>Will ensure that the throttle will be 0 when execution stops.</p>
 
 <h1 id="other-controls">OTHER CONTROLS</h1>
 

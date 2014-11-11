@@ -69,7 +69,7 @@ before and know the basics of how to fly a rocket under manual
 control.  It does NOT assume you know a lot about computer
 programming, and it will walk you through some basic first steps.)</p>
 
-<p><a href="../index.html#tutorial-style-documentation">Other tutorials</a> exist for kOS.</p>
+<p><a href="../../index.html#tutorial-style-documentation">Other tutorials</a> exist for kOS.</p>
 
 <h3 id="first-example-hello-world">First example: Hello World</h3>
 
@@ -238,14 +238,14 @@ RUN HELLO.
 <p><em>But where is it stored behind the scenes?</em>  The archive is currently
 slightly violating the design of KSP mods that puts everything in
 the GameData folder.  The kSP Archive is actually stored in the
-Plugins/PluginData/Archive folder of your MAIN KSP home, not inside
+<code>Ships/Script</code> folder of your MAIN KSP home, not inside
 GameData.</p>
 
 <p>If a file is stored inside the archive, it can actually be edited <em>by
 an external text editor of your choice</em> instead of using kOS's in-game
 editor.  This is usually a much better practice once you start doing
 more complex things with kOS.  You can also make new files in the
-archive folder.  Just make sure that all the files end with a .txt
+archive folder.  Just make sure that all the files end with a <code>.ks</code>
 filename suffix or kOS won't use them.</p>
 
 <p>Further reading about files and volumes:</p>
@@ -317,14 +317,14 @@ you never actually have to type in the things you see after the slashes.
 They're there for your benefit when reading this document but you can
 leave them out if you wish.</p>
 
-<p>Save the file in your Plugins/PluginData/Archive folder of your KSP
-installation under the filename "hellolaunch.txt".  DO NOT save it anywhere
+<p>Save the file in your <code>Ships/Script</code> folder of your KSP
+installation under the filename "hellolaunch.ks".  DO NOT save it anywhere
 under GameData/kOS/.  Do NOT.  According to the KSP standard, normally
 KSP mods should put their files in GameData/[mod name], but kOS puts
 the archive outside the GameData folder because it represents content
 owned by you, the player, not content owned by the kOS mod.</p>
 
-<p>By saving the file in Plugins/PluginData/Archive, you have actually
+<p>By saving the file in <code>Ships/Script</code>, you have actually
 put it in your archive volume of kOS.  kOS will see it there immediately
 without delay.  You do not need to restart the game.  If you do:</p>
 
@@ -333,9 +333,7 @@ LIST FILES.
 </code></pre>
 
 <p>after saving the file from your external text editor program, you
-will see a listing of your file "hellolaunch" right away.  (<em>Outside</em>
-of the game, the filename has to have a *.txt suffix, but inside the
-game, you don't see the .txt part of the name.)</p>
+will see a listing of your file "hellolaunch" right away.</p>
 
 <p>Okay, now copy it to your local drive and give it a try running it
 from there;</p>
@@ -362,7 +360,7 @@ for it to be able to run it.</p>
 
 <p><strong>Step 3: Make the script actually do something</strong></p>
 
-<p>Okay now go back into your <em>text editor of choice</em> and append a few more lines to the hellolaunch.txt file so it now looks like this:</p>
+<p>Okay now go back into your <em>text editor of choice</em> and append a few more lines to the hellolaunch.ks file so it now looks like this:</p>
 
 <pre><code>// My First Launcher.
 //
@@ -390,7 +388,7 @@ WAIT UNTIL SHIP:ALTITUDE &gt; 70000. // pause here until ship is high up.
 // to turn back off again right away and nothing would happen.
 </code></pre>
 
-<p>Save this file to hellolaunch.txt again, and re-copy it to your
+<p>Save this file to hellolaunch.ks again, and re-copy it to your
 vessel that should still be sitting on the launchpad, then run it,
 like so:</p>
 

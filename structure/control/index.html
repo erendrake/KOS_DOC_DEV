@@ -82,6 +82,36 @@ see the <a href="../../summary_topics/ship_control/index.html">page about flight
 <p>Unlike with so-called "Cooked" steering, "raw" steering uses the SET command, not the LOCK command.
 Using LOCK with these controls won't work.</p>
 
+<h3 id="direct-flight-controls">Direct Flight Controls</h3>
+
+<p>These "Raw" controls allow you the direct control of flight parameters while the current program is running.</p>
+
+<h4 id="rotation">Rotation</h4>
+<p>Suffix              | type   | GET | SET | Description                          | Equivalent WASDQE, NHIJKL manual keyboard controls
+——————–|——–|—–|—–|————————————–|——————————————
+:YAW                | number | yes | yes | Affects Rotation                     | -1.0 = "D". 1.0 = "A"
+:PITCH              | number | yes | yes | Affects Rotation                     | -1.0 = "W". 1.0 = "S"
+:ROLL               | number | yes | yes | Affects Rotation                     | -1.0 = "Q". 1.0 = "E"
+:YAWTRIM            | number | yes | yes | Affects Rotation Trim                | 
+:PITCHTRIM          | number | yes | yes | Affects Rotation Trim                | 
+:ROLLTRIM           | number | yes | yes | Affects Rotation Trim                | 
+:ROTATION           | <a href="../vector/index.html">Vector</a> |yes|yes | Controls all the above 3 things in one vector together. |
+:FORE               | number | yes | yes | Affects Translation                  | -1.0 = "N". 1.0 = "H"
+:STARBOARD          | number | yes | yes | Affects Translation                  | -1.0 = "L". 1.0 = "J"
+:TOP                | number | yes | yes | Affects Translation                  | -1.0 = "I". 1.0 = "K"
+:TRANSLATION        | <a href="../vector/index.html">Vector</a> |yes|yes | Controls all the above 3 things in one vector together. |
+:MAINTHROTTLE       | number | yes | yes | Affects the throttle                 | Set between 0.0 and 1.0.  much like the cooked flying "LOCK THROTTLE" command.
+:WHEELSTEER         | number | yes | yes | Affects the steering on ground       | set to the range -1..+1 to turn left or right like using the "A" and "D" keys while driving.
+:WHEELSTEERTRIM     | number | yes | yes | Affects the steering trim on ground  | 
+:WHEELTHROTTLE      | number | yes | yes | Affects the throttle on ground       | set between 0.0 and 1.0.  will not be used when off the ground.
+:WHEELTHROTTLETRIM  | number | yes | yes | Affects the throttle trim on ground  | 
+:NEUTRAL            | boolean| yes | no  | Reports if kOS has any set controls  | 
+:NEUTRALIZE         | boolean| no  | yes | Causes manual control to let go      | When set to true, kOS lets go of the controls and allows the player to manually control them again.</p>
+
+<h3 id="pilot-commands">Pilot commands</h3>
+
+<p>These suffixes allow you to read the input given to the system by the user. </p>
+
 <table>
   <thead>
     <tr>
@@ -95,108 +125,140 @@ Using LOCK with these controls won't work.</p>
   </thead>
   <tbody>
     <tr>
-      <td>:YAW</td>
+      <td>:PILOTYAW</td>
       <td>number</td>
       <td>yes</td>
-      <td>yes</td>
-      <td>Affects Rotation</td>
+      <td>no</td>
+      <td>Pilot's Rotation</td>
       <td>-1.0 = "D". 1.0 = "A"</td>
     </tr>
     <tr>
-      <td>:PITCH</td>
+      <td>:PILOTPITCH</td>
       <td>number</td>
       <td>yes</td>
-      <td>yes</td>
-      <td>Affects Rotation</td>
+      <td>no</td>
+      <td>Pilot's Rotation</td>
       <td>-1.0 = "W". 1.0 = "S"</td>
     </tr>
     <tr>
-      <td>:ROLL</td>
+      <td>:PILOTROLL</td>
       <td>number</td>
       <td>yes</td>
-      <td>yes</td>
-      <td>Affects Rotation</td>
+      <td>no</td>
+      <td>Pilot's Rotation</td>
       <td>-1.0 = "Q". 1.0 = "E"</td>
     </tr>
     <tr>
-      <td>:ROTATION</td>
+      <td>:PILOTYAWTRIM</td>
+      <td>number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>Pilot's Rotation Trim</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>:PILOTPITCHTRIM</td>
+      <td>number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>Pilot's Rotation Trim</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>:PILOTROLLTRIM</td>
+      <td>number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>Pilot's Rotation Trim</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>:PILOTROTATION</td>
       <td><a href="../vector/index.html">Vector</a></td>
       <td>yes</td>
-      <td>yes</td>
+      <td>no</td>
       <td>Controls all the above 3 things in one vector together.</td>
       <td> </td>
     </tr>
     <tr>
-      <td>:FORE</td>
+      <td>:PILOTFORE</td>
       <td>number</td>
       <td>yes</td>
-      <td>yes</td>
-      <td>Affects Translation</td>
+      <td>no</td>
+      <td>Pilot's Translation</td>
       <td>-1.0 = "N". 1.0 = "H"</td>
     </tr>
     <tr>
-      <td>:STARBOARD</td>
+      <td>:PILOTSTARBOARD</td>
       <td>number</td>
       <td>yes</td>
-      <td>yes</td>
-      <td>Affects Translation</td>
+      <td>no</td>
+      <td>Pilot's Translation</td>
       <td>-1.0 = "L". 1.0 = "J"</td>
     </tr>
     <tr>
-      <td>:TOP</td>
+      <td>:PILOTTOP</td>
       <td>number</td>
       <td>yes</td>
-      <td>yes</td>
-      <td>Affects Translation</td>
+      <td>no</td>
+      <td>Pilot's Translation</td>
       <td>-1.0 = "I". 1.0 = "K"</td>
     </tr>
     <tr>
-      <td>:TRANSLATION</td>
+      <td>:PILOTTRANSLATION</td>
       <td><a href="../vector/index.html">Vector</a></td>
       <td>yes</td>
-      <td>yes</td>
+      <td>no</td>
       <td>Controls all the above 3 things in one vector together.</td>
       <td> </td>
     </tr>
     <tr>
-      <td>:NEUTRAL</td>
-      <td>boolean</td>
+      <td>:PILOTMAINTHROTTLE</td>
+      <td>number</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>Throttle when kOS is inactive</td>
+      <td>Range between 0.0 and 1.0</td>
+    </tr>
+    <tr>
+      <td>:PILOTWHEELTHROTTLE</td>
+      <td>number</td>
       <td>yes</td>
       <td>no</td>
-      <td>Reports if control was let go</td>
-      <td>are any manual controls pressed?</td>
+      <td>Pilot's Wheel Throttle</td>
+      <td>Range between 0.0 and 1.0</td>
     </tr>
     <tr>
-      <td>:NEUTRALIZE</td>
-      <td>boolean</td>
+      <td>:PILOTWHEELTHROTTLETRIM</td>
+      <td>number</td>
+      <td>yes</td>
       <td>no</td>
-      <td>yes</td>
-      <td>Causes manual control to let go</td>
-      <td>When set to true, kOS lets go of the controls and allows the player to manually control them again.</td>
+      <td>Pilot's Wheel Throttle Trim</td>
+      <td>Range between 0.0 and 1.0</td>
     </tr>
     <tr>
-      <td>:MAINTHROTTLE</td>
+      <td>:PILOTWHEELSTEER</td>
       <td>number</td>
       <td>yes</td>
-      <td>yes</td>
-      <td>Affects the throttle</td>
-      <td>Set between 0.0 and 1.0 much like the cooked flying "LOCK THROTTLE" command.</td>
-    </tr>
-    <tr>
-      <td>:WHEELTHROTTLE</td>
-      <td>number</td>
-      <td>yes</td>
-      <td>yes</td>
-      <td>Affects the throttle just for wheels</td>
-      <td>set between 0.0 and 1.0.  will not be used when off the ground.</td>
-    </tr>
-    <tr>
-      <td>:WHEELSTEER</td>
-      <td>number</td>
-      <td>yes</td>
-      <td>yes</td>
-      <td>Affects the steering on ground</td>
+      <td>no</td>
+      <td>Pilot's Wheel Steering</td>
       <td>set to the range -1..+1 to turn left or right like using the "A" and "D" keys while driving.</td>
+    </tr>
+    <tr>
+      <td>:PILOTWHEELSTEERTRIM</td>
+      <td>number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>Pilot's Wheel Steering Trim</td>
+      <td>set to the range -1..+1 to turn left or right like using the "A" and "D" keys while driving.</td>
+    </tr>
+    <tr>
+      <td>:PILOTNEUTRAL</td>
+      <td>number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>Is the pilot active?</td>
+      <td>-1.0 = "I". 1.0 = "K"</td>
     </tr>
   </tbody>
 </table>
