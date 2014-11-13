@@ -80,6 +80,7 @@ FOR eng IN myVariable {
       <th>Type</th>
       <th>Get</th>
       <th>Set</th>
+      <th>Method arguments</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -89,13 +90,39 @@ FOR eng IN myVariable {
       <td>varies</td>
       <td>..</td>
       <td>..</td>
+      <td>..</td>
       <td>Engine is a type of Part, and therefore can use all the suffixes of Part.  Shown below are only the suffixes that are unique to Engine variables:</td>
+    </tr>
+    <tr>
+      <td>:ACTIVATE</td>
+      <td>n/a</td>
+      <td>n/a</td>
+      <td>no</td>
+      <td>no args</td>
+      <td>CALL to make the engine turn on.</td>
+    </tr>
+    <tr>
+      <td>:SHUTDOWN</td>
+      <td>n/a</td>
+      <td>n/a</td>
+      <td>no</td>
+      <td>no args</td>
+      <td>CALL to make the engine turn off.</td>
+    </tr>
+    <tr>
+      <td>:THRUSTLIMIT</td>
+      <td>Number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no args</td>
+      <td>If this an engine with a thrust limiter (tweakable) enabled, what percentage is it limited to?</td>
     </tr>
     <tr>
       <td>:MAXTHRUST</td>
       <td>Number (kilonewtons)</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>How much thrust would this engine give if the throttle was max and conditions were ideal.</td>
     </tr>
     <tr>
@@ -103,6 +130,7 @@ FOR eng IN myVariable {
       <td>Number (kilonewtons)</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>How much thrust is this engine giving at this very moment.</td>
     </tr>
     <tr>
@@ -110,6 +138,7 @@ FOR eng IN myVariable {
       <td>Number (Liters/s? maybe)</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>Rate at which fuel is being burned.  Not sure what the units are.</td>
     </tr>
     <tr>
@@ -117,6 +146,7 @@ FOR eng IN myVariable {
       <td>Number</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>Specific impulse <a href="http://en.wikipedia.org/wiki/Specific_impulse">Wiki</a></td>
     </tr>
     <tr>
@@ -124,6 +154,7 @@ FOR eng IN myVariable {
       <td>boolean</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>Is this engine failed because it is starved of a resource (liquidfuel, oxidizer, oxygen)?</td>
     </tr>
     <tr>
@@ -131,6 +162,7 @@ FOR eng IN myVariable {
       <td>boolean</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>Has this engine been ignited?  If both :IGNITION and :FLAMEOUT are true, that means the engine could start up again immediately if more resources were made available to it.</td>
     </tr>
     <tr>
@@ -138,6 +170,7 @@ FOR eng IN myVariable {
       <td>boolean</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>Is this an engine that can be started again?  Usually True, but false for solid boosters.</td>
     </tr>
     <tr>
@@ -145,6 +178,7 @@ FOR eng IN myVariable {
       <td>boolean</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>Is this an engine that can be shut off once started?  Usually True, but false for solid boosters.</td>
     </tr>
     <tr>
@@ -152,14 +186,8 @@ FOR eng IN myVariable {
       <td>boolean</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>Is this an engine that is stuck at a fixed throttle?  (i.e. solid boosters)</td>
-    </tr>
-    <tr>
-      <td>:THRUSTLIMIT</td>
-      <td>Number</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>If this an engine with a thrust limiter (tweakable) enabled, what percentage is it limited to?</td>
     </tr>
   </tbody>
 </table>

@@ -98,6 +98,13 @@ Go To Documentation First Page
       <td>Distance from the <a href="../../summary_topics/CPU_vessel/index.html">CPU_Vessel</a> to this point on the surface</td>
     </tr>
     <tr>
+      <td>: TERRAINHEIGHT</td>
+      <td>Number, in Merters</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>Distance of the terrain above "sea level" at this geographical position.  Negative numbers are below "sea level".</td>
+    </tr>
+    <tr>
       <td>: HEADING</td>
       <td>Number, in Degrees</td>
       <td>yes</td>
@@ -136,6 +143,9 @@ PRINT LATLNG(10,20):HEADING.             // Print the heading to the point.
 PRINT spot:BEARING.                      // Print the heading to the point relative to vessel heading.
 SET spot TO SHIP:GEOPOSITION.            // Make spot into a location on the surface directly underneath the current ship
 SET spot TO LATLNG(spot:LAT,spot:LNG+5). // Make spot into a new location 5 degrees east of the old one.
+//
+PRINT "THESE TWO NUMBERS SHOULD BE THE SAME:"
+PRINT (SHIP:ALTITIUDE - SHIP:GEOPOSITION:TERRAINHEIGHT) + ", " + ALT:RADAR.
 </code></pre>
 
 </article>

@@ -75,6 +75,7 @@ all Sensors are a kind of, is not well documented.)</p>
       <th>Type</th>
       <th>Get</th>
       <th>Set</th>
+      <th>Method Arguments</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -84,6 +85,7 @@ all Sensors are a kind of, is not well documented.)</p>
       <td>varies</td>
       <td>..</td>
       <td>..</td>
+      <td>..</td>
       <td>Sensor is a type of Part, and therefore can use all the suffixes of Part.  Shown below are only the suffixes that are unique to Engine variables:</td>
     </tr>
     <tr>
@@ -91,6 +93,7 @@ all Sensors are a kind of, is not well documented.)</p>
       <td>boolean</td>
       <td>yes</td>
       <td>yes</td>
+      <td>no args</td>
       <td>true of the sensor is enabled.  Can SET to cause the sensor to activate or de-activate.</td>
     </tr>
     <tr>
@@ -98,6 +101,7 @@ all Sensors are a kind of, is not well documented.)</p>
       <td>??</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>??</td>
     </tr>
     <tr>
@@ -105,7 +109,24 @@ all Sensors are a kind of, is not well documented.)</p>
       <td>varies, usually double</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>The value of the sensor's readout, usually a double.</td>
+    </tr>
+    <tr>
+      <td>:POWERCONSUMPTION</td>
+      <td>Number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no args</td>
+      <td>The rate at which this sensor drains ElectricCharge.  (Units unkown - TODO - fix that)</td>
+    </tr>
+    <tr>
+      <td>:TOGGLE</td>
+      <td>n/a</td>
+      <td>n/a</td>
+      <td>no</td>
+      <td>no args</td>
+      <td>CALL this method to cause the sensor to switch between active and deactivated or visa versa.</td>
     </tr>
   </tbody>
 </table>
@@ -114,8 +135,16 @@ all Sensors are a kind of, is not well documented.)</p>
 
 <pre><code>PRINT "Full Sensor Dump:".
 LIST SENSORS IN SENSELIST.
+
+// TURN EVERY SINGLE SENSOR ON:
 FOR S IN SENSELIST {
-  PRINT "SENSOR " + S:TYPE + ": ACTIVE = " + S:ACTIVE + " VALUE = " + S:READOUT.
+  PRINT "SENSOR " + S:TYPE + " VALUE = " + S:READOUT.
+  IF S:ACTIVE {
+    PRINT "     SENSOR IS ALREADY ON."
+  } ELSE {
+    PRINT "     SENSOR WAS OFF.  TURNING IT ON."
+    S:TOGGLE().
+  }.
 }.
 </code></pre>
 

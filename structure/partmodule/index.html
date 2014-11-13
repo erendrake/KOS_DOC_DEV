@@ -61,8 +61,8 @@ Go To Documentation First Page
 <article class='markdown-body'>
 <h1 id="partmodule">﻿PartModule</h1>
 
-<p>All rightclick menus and action group actions can be accessed via the
-partmodule objects that are attached to parts of a ship.</p>
+<p>Almost everything done with at rightclick menus and action group action can
+be accessed via the partmodule objects that are attached to parts of a ship.</p>
 
 <p>The exact arrangement of PartModules to Parts to Ships, and how to make
 use of a PartModule is a complex enough topic to warrant its own separate
@@ -219,9 +219,39 @@ menu for a part?  If so, then let kOS scripts GET the value.</p>
 adjustments on the right-click context menu for a part, AND, is that
 tweakable a CURRENTLY enabled one?  If so, then let KOS scripts SET the
 value, BUT they must set it to one of the values that the GUI would normally
-allow or it will be denied.  (So if the gui presents a slider from 1 to 10,
-with detents on the 0.5 marks, then a kOS script could set that value to,
-say, 2.5, but not set it to 2.75, nor to 14, nor to -1.)</p>
+allow, according to the following rules.</p>
+    <ul>
+      <li>If the KSPField is boolean:
+        <ul>
+          <li>The value must be true, false, or 0 or 1.</li>
+        </ul>
+      </li>
+      <li>If the KSPField is an integer:
+        <ul>
+          <li>The value must be a whole number.</li>
+        </ul>
+      </li>
+      <li>If the KSPField is a floating point sliding number:
+        <ul>
+          <li>The GUI for this field will be definhed as a slider with a min value, a max value, with a fixed increment interval where the detents are.  When setting such a value, you will be constrained to the limits of this slider.
+            <ul>
+              <li>For example: If a slider is defined to have a minimum value of 2.0, a maximum value of 5.0, and a minimum allowed delta increment of 0.1:
+                <ul>
+                  <li>If you try to set it to 0, it will instead become 2, the minimum allowed value.</li>
+                  <li>If you try to set it to 9, it will instead become 5, the maximum allowed value.</li>
+                  <li>If you try to set it to 3.14159, it will instead become 3.1, because that's rounding to the nearest increment step the slider supports.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>If the KSPField is a string:
+        <ul>
+          <li>There is currently no way to set these because kOS uses the existence of a gui tweakable as "proof" that it's okay to modify the field, and in the stock game there are no gui tweakables for string fields.  This may change in the future if mods that extend the tweakables system are taken into account.</li>
+        </ul>
+      </li>
+    </ul>
   </li>
 </ul>
 

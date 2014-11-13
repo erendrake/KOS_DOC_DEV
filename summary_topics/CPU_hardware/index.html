@@ -72,14 +72,29 @@ those lines, the KSP player writing a Kerboscript program needs to know a
 few basic things about how the simulated kOS CPU operates in order to be able
 to write more advanced scripts.  This page contains that type of information.</p>
 
-<h2 id="physics-ticks-and-frozen-intervals">Physics Ticks and Frozen Intervals</h2>
+<h2 id="update-ticks-physics-ticks-and-frozen-intervals">Update Ticks, Physics Ticks and Frozen Intervals</h2>
 
 <p>Kerbal Space Program simulates the universe by running the universe in small
 incremental time intervals that for the purpose of this document, we will call
 "<strong>physics ticks</strong>".  The exact length of time for a physics tick varies as the
 program runs.  One physics tick might take 0.09 seconds while the next one
-might take 0.085 seconds.  (The default setting for max allowed time for a
-physics tick is 1/10th of a second, just to give a ballpark figure.)</p>
+might take 0.085 seconds.  (The default setting for the rate of physics ticks
+is 25 ticks per second, just to give a ballpark figure, but you mustn't write
+any scripts that depend on this assumption because it's a setting the user can
+change, and it can also vary a bit during play depending on system load.  The
+setting is a target goal for the game to try to achieve, not a guarantee.  If 
+it's a fast computer with a speedy amimation frame rate, it will try to run 
+phyics ticks less often than it runs animation frame updates, to try to make
+the physics tick rate match this setting.   On the other hand, If it's a slow
+computer, it will try to sacrifice animation frame rate to achive this number
+(meaning physics get calulcated faster than you can see the effects.)  The 
+game will try as hard as it can to keep the physics rate matched to the setting,
+not faster and not slower, because when the physics rate isn't steady, the
+simulation breaks down and starts making erroneous things happen, like
+miscalculating forces on part joints and breaking ships.  But however hard
+the game tries to stick to the setting, it can't do it 100% the same every single
+moment, thus the need to actually measure elapsed time in the TIME variable in your
+scripts.</p>
 
 <p>The entire simulated universe is utterly frozen during the duration of a physics
 tick.  For example, if one physics tick occurs at timestamp 10.51 seconds, and
@@ -93,9 +108,24 @@ physics tick at 10.59 seconds, then all the numbers are updated.</p>
 that quick description is enough to describe what you need to know about how
 kOS's CPU works.</p>
 
-<h3 id="what-does-a-kos-cpu-do-each-physics-tick">What does a kOS CPU do each <strong>physics tick</strong>?</h3>
+<h3 id="the-difference-between-an-update-tick-and-a-physics-tick">The difference between an Update tick and a Physics tick</h3>
 
-<p>On each physics tick, each kOS CPU that's within physics range (i.e. 2.5 km),
+<p>There is another kind of time tick called an <strong>Update tick</strong>.  It is 
+similar to, but different from, a <strong>physics tick</strong>.  <em>Update ticks</em>
+often occur a bit more often than <em>physics ticks</em>.  Update ticks are
+exactly the same thing as your game's Frame Rate.  Each time your
+game renders another animation frame, it performs another Update tick.
+On a good gaming computer with fast speed and a good graphics card,
+It is typical to have about 2 or even 3 <em>Update ticks</em> happen within
+the time it takes to have one <em>physics tick</em> happen.  On a slower computer,
+it is also possible to go the other way and have <em>Update ticks</em> happening
+<em>less</em> frequently than <em>physics tics</em>.  Basically, look at your frame rate.
+Is it higher than 25 fps?  If so, then your <em>update ticks</em> happen faster than
+ your <em>physics ticks</em>, otherwise its the other way around.</p>
+
+<h3 id="the-kos-cpu-runs-every-update-tick-rather-than-every-physics-tick">The kOS CPU runs every <em>update tick</em> rather than every <em>physics tick</em></h3>
+
+<p>On each update tick, each kOS CPU that's within physics range (i.e. 2.5 km),
 wakes up and performs the following steps, in this order:</p>
 
 <ul>
@@ -127,7 +157,7 @@ all of these things are called "triggers".</p>
   <li>WHEN condition THEN { some commands }.</li>
 </ul>
 
-<p>The way these work is that once per <strong>physics tick</strong>, all the LOCK expressions which
+<p>The way these work is that once per <strong>update tick</strong>, all the LOCK expressions which
 directly affect flight control are re-executed, and then each conditional trigger's
 condition is checked, and if true, then the entire body of the trigger is executed 
 all the way to the bottom <em>before any more instrucions of the main body are
@@ -138,7 +168,7 @@ in one go before the rest of the main body continues.</p>
 <h3 id="do-not-loop-a-long-time-in-a-trigger-body">DO NOT LOOP A LONG TIME IN A TRIGGER BODY!!</h3>
 
 <p>Because the entire body of a trigger will execute all the way to the bottom
-on <em>within a single</em> <strong>physics tick</strong>, <em>before</em> any other code continues, it is vital that
+on <em>within a single</em> <strong>update tick</strong>, <em>before</em> any other code continues, it is vital that
 you not write code in a trigger body that takes a long time to execute.
 The body of a trigger must be kept quick.  An infinite loop in a trigger
 body could literally freeze all of KSP, because the kOS mod will never 
@@ -148,7 +178,7 @@ finish executing its update.</p>
 and the script will be <strong>terminated with a runtime error</strong> if the triggers
 like WHEN/THEN and ON take more than CONFIG:IPU instructions to execute.  The sum
 total of all the code within your WHEN/THEN and ON code blocks MUST be designed
-to complete within one physics tick.</p>
+to complete within one update tick.</p>
 
 <p><strong>This may seem harsh</strong>.  Ideally, kOS would only generate a runtime error if it thought
 your script was stuck in an <strong>infinite loop</strong>, and allow it to exceed the
@@ -173,12 +203,12 @@ depend on running a long-lasting amount of code inside triggers.</p>
 <p>If you want a trigger body that is meant to loop, the only acceptable way
 to do it is to design it to execute just once, but then use the PRESERVE
 keyword to keep the trigger around for the next update.  Thus your trigger
-becomes a sort of "loop" that executes one iteration per <strong>physics tick</strong>.</p>
+becomes a sort of "loop" that executes one iteration per <strong>update tick</strong>.</p>
 
 <p>It is also important to consider the way triggers execute for performance
 reasons too.  Every time you write an expression for a trigger, you are
 creating a bit of code that gets executed fully to the end before your main
-body will continue, once each <strong>physics tick</strong>.  A complex expression in a
+body will continue, once each <strong>update tick</strong>.  A complex expression in a
 trigger condition, which in turn calls other complex LOCK expressions, which
 call other complex LOCK expressions, and so on, may cause kOS to bog itself
 down during each update.  (And as of version 0.14, it may cause kOS to
@@ -186,9 +216,9 @@ stop your program and issue a runtime error if it's taking too long.)</p>
 
 <p>Because of how WAIT works, you cannot put a WAIT statement inside a trigger.
 If you try, it will have no effect.  This is because WAIT requires the
-ability of the program to go to sleep and then in a later physics tick,
+ability of the program to go to sleep and then in a later update tick,
 continue from where it left off.  Because triggers run to the bottom entirely
-within one physics tick, they can't do that.</p>
+within one update tick, they can't do that.</p>
 
 <p><a name="WAIT"></a></p>
 
@@ -196,50 +226,68 @@ within one physics tick, they can't do that.</p>
 
 <p>Any WAIT statement causes the kerboscript program to immediately stop executing
 the main program where it is, even if far fewer than <a href="../../structure/config/index.html#IPU">CONFIG:IPU</a>
-instructions have been executed in this <strong>physics tick</strong>.  It will not continue the execution
-until at least the next <strong>physics tick</strong>, when it will check to see if the WAIT
+instructions have been executed in this <strong>update tick</strong>.  It will not continue the execution
+until at least the next <strong>update tick</strong>, when it will check to see if the WAIT
 condition is satisfied and it's time to wake up and continue.</p>
 
 <p>Therefore ANY WAIT of any kind will guarantee that your program will allow at least
-one <strong>physics tick</strong> to have happened before continuing.  If you attempt to:</p>
+one <strong>update tick</strong> to have happened before continuing.  If you attempt to:</p>
 
 <pre><code>WAIT 0.001.
 </code></pre>
 
-<p>But the duration of the next physics tick is actually 0.09 seconds, then you will
+<p>But the duration of the next update tick is actually 0.09 seconds, then you will
 actually end up waiting at least 0.09 seconds.  It is impossible to wait a unit
-of time smaller than one physics tick.</p>
+of time smaller than one update tick.</p>
 
 <p>Using a very small unit of time in a WAIT statement is an effective way to force
-the CPU to allow a physics tick to occur before continuing to the next line of code.</p>
+the CPU to allow a update tick to occur before continuing to the next line of code.</p>
 
 <p>Similarly, if you just say:</p>
 
 <pre><code>WAIT UNTIL TRUE.
 </code></pre>
 
-<p>Then even though the condition is immediately true, it will still wait one physics
+<p>Then even though the condition is immediately true, it will still wait one update
 tick to discover this fact and continue.</p>
 
 <p><a name="FROZEN"></a></p>
 
 <h2 id="the-frozen-universe">THE FROZEN UNIVERSE</h2>
 
-<p>Each physics tick, the kOS mod wakes up and runs through all the currently loaded
+<p>Each <strong>update</strong> <em>tick</em>, the kOS mod wakes up and runs through all the currently loaded
 CPU parts that are in "physics range" (i.e. 2.5 km), and executes a batch of
 instructions from your script code that's on them.  It is important to note
-that during the running of this batch of instructions, because it all occurs
-on the same <strong>physics tick</strong>, none of the values that you might query from
+that during the running of this batch of instructions, because no <strong>physics ticks</strong>
+are happening during it, none of the values that you might query from
 the KSP system will change.  The clock time returned from the TIME variable
 will keep the same value throughout.  The amount of fuel left will remain fixed
 throughout.  The position and velocity of the vessel will remaing fixed throughout.
 It's not until the next physics tick occurs that those values will change to new
 numbers.  It's typical that several lines of your kerboscript code will run
-during a single frozen physics tick.</p>
+during a single update tick.</p>
+
+<p>Effectively, as far as the <em>simulated</em> universe can tell, it's as if your script
+runs several instructions in literally zero amount of time, and then pauses for a fraction
+of a second, and then runs more instructions in literally zero amount of time, then
+pauses for a fraction of a second, and so on, rather than running the program in a
+smoothed out continuous way.</p>
+
+<p>If your animation rate is slow enough, it gets even weirder.  If your animation
+<em>update ticks</em> occur less often than your <em>physics ticks</em>, then it's as if your 
+program spends the majority of the time paused, and only occasionally wakes up
+to execute a short burst of instructions.</p>
+
+<p>Because of the difference between <em>update ticks</em> and <em>physics ticks</em>, it's 
+entirely possible that your kOS script runs multiple updates in a row while
+the universe is still frozen, or it's possible to go the other way around
+and have the universe move more than one physics tick before your program has
+time to notice and react.  A well written kOS script should be able to handle
+both cases.</p>
 
 <p>This is a vital difference between how a kOS CPU behaves versus how a real
 world computer behaves.  In a real world computer, you would know for
-certain that time will pass, even if it's just a tiny amount of time,
+certain that time will pass, even if it's just a few picoseconds,
 between the execution of one statement and the next.</p>
 
 <h2 id="so-why-does-this-matter">So why does this matter?</h2>
@@ -274,12 +322,17 @@ altitude are the same.  Not because the vessel has no vertical motion, but becau
 loop is executing fast enough to finish more than one iteration within the same <strong>physics tick</strong>.
 The two altitude measurements are the same because no time has passed in the simulated universe.</p>
 
-<h2 id="the-fix-to-the-frozen-universe-problem-wait-0001">THE FIX To the frozen Universe Problem: WAIT 0.001</h2>
+<h2 id="the-fix-to-the-frozen-universe-problem-wait-for-time-to-change">THE FIX To the frozen Universe Problem: WAIT for TIME to change</h2>
 
 <p>If you are exeucuting a loop like the one above in which it is absolutely vital that
 the next iteration of the loop must occur in a <em>different</em> <strong>physics tick</strong> than
 the previous one, so that it can take <em>new</em> measurements that are different, the 
-solution is simply to put in a very tiny WAIT statement in the body of the loop, like so:</p>
+solution is to use a WAIT statememnt that will delay until there's evidence that
+the physics clock has moved a tick.</p>
+
+<p>The most effective way to do that is to check the <a href="../../structure/timespan/index.html">TIME</a>
+and see if it's different than it was before.  As long as you are still within the
+same <em>physics tick</em>, the TIME will not move.</p>
 
 <pre><code>// Imagine something like this inside a script
 // designed to hover in place:
@@ -295,12 +348,34 @@ UNTIL ABS( PREV_ALT - SHIP:ALTITUDE ) &lt; 0.1 {
   // Assume there's fancy PID controller commands here, omitted for this example.
   //
 
-  WAIT 0.001. // delay until next physics tick.
+  SET TIMESTAMP TO TIME:SECONDS.
+  WAIT UNTIL TIME:SECONDS &gt; TIMESTAMP. // clock will not move until we are in a new physics tick.
 }.
 </code></pre>
 
-<p>ALL WAITs, no matter how small, cause the CPU to go to sleep until the next physics tick, as
-described above on this page.</p>
+<h3 id="a-more-elegant-solution">A more elegant solution</h3>
+
+<p>(Thanks to user <em>Cairan</em>, who suggested this very good idea in the forums.)</p>
+
+<p>Put this code up near the top of your script:</p>
+
+<pre><code>SET LASTPHYS TO -99999. // force it to trigger immediately the first time through.
+LOCK PHYSICS TO MIN(1,FLOOR((TIME:SECONDS-LASTPHYS) / 0.04 )).
+WHEN PHYSICS THEN {
+  SET LASTPHYS TO TIME:SECONDS.
+
+  // Store your measurements from the physical world here during
+  // the body of this WHEN
+
+  PRESERVE.
+}.
+</code></pre>
+
+<h3 id="an-even-better-solution">An even better solution.</h3>
+
+<p>There has been talk of instituting a special command: WAIT UNTIL PHYSICS that will
+sleep until there has been a physics update, and it's a good idea but it
+hasn't been implemented yet.</p>
 
 
 </article>

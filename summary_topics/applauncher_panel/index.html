@@ -59,77 +59,20 @@ Go To Documentation First Page
 <span class='blc'></span>
 <span class='trc'></span>
 <article class='markdown-body'>
-<h1 id="querying-a-vessels-parts">Querying a vessel's parts</h1>
+<h1 id="app-control-panel">App Control Panel</h1>
 
-<p>This is a quick list to get the idea across fast.  The actual
-details of the meaning of these things is complex enough to
-warrant <a href="../../summary_topics/ship_parts_and_modules/index.html">its own topic</a>.</p>
+<p>As of kOS v0.15, kOS now makes use of Kerbal Space Program's built-in
+Application Launcher toolbar, to open a config/status panel for kOS.</p>
 
-<p>To get the parts of a vessel (such as your current vessel,
-called SHIP), you can do the following things:</p>
+<p>This panel behaves like the other display panels the launcher creates, 
+and operates mutually exclusively with them.  (For example you can't
+make the kOS App Control Panel appear at the same time as the stock
+Resource display panel.  Opening one toggles the other one off,
+and visa versa.)</p>
 
-<p>These are equivalent. They get the full list of all the parts:</p>
+<p>Here is an annotated image of the control panel and what it does:</p>
 
-<pre><code>LIST PARTS IN MyPartList.
-SET MyPartlist TO SHIP:PARTS.
-</code></pre>
-
-<p>This gets all the parts that have the name given, as either a 
-nametag (Part:TAG), a title (Part:TITLE), or a name, (Part:NAME):</p>
-
-<pre><code>SET MyPartList to SHIP:PARTSDUBBED("something").
-</code></pre>
-
-<p>These are other ways to get parts that are more specific about what
-exact nomenclature system is being used:</p>
-
-<pre><code>SET MyPartList to SHIP:PARTSTAGGED("something"). // only gets parts with Part:TAG = "something".
-SET MyPartList to SHIP:PARTSTITLED("something"). // only gets parts with Part:TITLE = "something".
-SET MyPartList to SHIP:PARTSNAMED("something"). // only gets parts with Part:NAME = "something".
-</code></pre>
-
-<p>This gets all the PartModules on a ship that have the same module name:</p>
-
-<pre><code>SET MyModList to SHIP:MODULESNAMED("something").
-</code></pre>
-
-<p>This gets all the parts that have been defined to have some sort
-of activity occur from a particular action group:</p>
-
-<pre><code>SET MyPartList to SHIP:PARTSINGROUP( AG1 ). // all the parts in action group 1.
-</code></pre>
-
-<p>This gets all the modules that have been defined to have some sort
-of activity occur from a particular action group:</p>
-
-<pre><code>SET MyModList to SHIP:MODULESINGROUP( AG1 ). // all the parts in action group 1.
-</code></pre>
-
-<p>This gets the primary root part of a vessel (the command core that you
-placed FIRST when building the ship in the VAB or SPH):</p>
-
-<pre><code>SET firstPart to SHIP:ROOTPART.
-</code></pre>
-
-<p>This lets you query all the parts that are immediate children of the
-current part in the tree:</p>
-
-<pre><code>SET firstPart to SHIP:ROOTPART.
-FOR P IN firstPart:CHILDREN {
-  print "The root part as an immediately attached part called " + P:NAME.
-}.
-</code></pre>
-
-<p>You could keep walking down the tree this way, or go upward with PARENT
-and HASPARENT:</p>
-
-<pre><code>IF thisPart:HASPARENT {
-  print "This part's parent part is "+ thisPart:PARENT:NAME.
-}.
-</code></pre>
-
-<p>This tree method of walking the parts is slightly less useful because user
-functions don't exist, making recursive algorithms messy to implement.</p>
+<p><img src="../../images/applauncher_panel.png" alt="applauncher panel" /></p>
 
 
 </article>

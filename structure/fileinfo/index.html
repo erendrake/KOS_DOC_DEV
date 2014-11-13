@@ -83,17 +83,74 @@ Go To Documentation First Page
       <td>String</td>
       <td>yes</td>
       <td>no</td>
-      <td>name of the file.</td>
+      <td>name of the file, including its file extension.</td>
+    </tr>
+    <tr>
+      <td>:FILETYPE</td>
+      <td>String</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>Type of the file as a string, taken from the <a href="#File_Type_list">File Type List</a> below.</td>
     </tr>
     <tr>
       <td>:SIZE</td>
       <td>Number</td>
       <td>yes</td>
       <td>no</td>
-      <td>size of the file.</td>
+      <td>size of the file, in bytes.</td>
+    </tr>
+    <tr>
+      <td>:MODIFIED</td>
+      <td>String</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>The date the file was last modified, in <a href="#Real_World_Timestamp">Real World Timestamp</a> format, described below.</td>
+    </tr>
+    <tr>
+      <td>:CREATED</td>
+      <td>String</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>The date the file was first created, in <a href="#Real_World_Timestamp">Real World Timestamp</a> format, described below.</td>
     </tr>
   </tbody>
 </table>
+
+<h3 id="file-type-list">File Type List</h3>
+
+<p>File types from the :FILETYPE suffix are one of the following strings:</p>
+
+<ul>
+  <li><strong>"ASCII"</strong> - A file containing ASCII text, like the result of a LOG command.</li>
+  <li><strong>"KERBOSCRIPT"</strong> - (unimplemented) A type of ASCII file containing Kerboscript ascii code.  At the moment this type does not ever get returned.  You will always get files of type ASCII instead.</li>
+  <li><strong>"KSM"</strong> - A type of file containing KerboMachineLanguage compiled code, that was created from the <a href="../../summary_topics/compile/index.html">COMPILE command</a>.</li>
+  <li><strong>"UNKNOWN"</strong> - Any other type of file.</li>
+</ul>
+
+<h3 id="real-world-timestamp">Real World Timestamp</h3>
+
+<p>These timestamps are NOT in Kerbal Space Program's simulated clock, but
+are in real world time.  This is for a good reason: the files exist outside
+of any one saved game and are global to all saved games you have.</p>
+
+<p><strong>The format of the real-world timestamps is as follows:</strong></p>
+
+<p><i>YYYY</i>-<i>MM</i>-<i>DD</i><b>T</b><i>hh</i>:<i>mm</i>:<i>ss</i>.<i>sssss</i><b>Z</b></p>
+
+<p>Where:</p>
+
+<ul>
+  <li><em>YYYY</em> is the Four-digit year.</li>
+  <li><em>MM</em> is the Two-digit month, padded with zeroes (i.e. September is '09' rather than '9'.)</li>
+  <li><em>DD</em> is the Two-digit day of month, padded with zeroes (i.e. the 5th of the month is '05' rather than '5'.)</li>
+  <li><strong>T</strong> is always a hardcoded capital letter "T".</li>
+  <li><em>hh</em> is the 24-hour clock time (5 AM is 05, 5 PM is 18).</li>
+  <li><em>mm</em> is the Two-digit minute-hand, padded with zeroes.</li>
+  <li><em>ss.ssss</em> is the seconds-hand, padded with zeroes to at least 2 digits before the decimal point, and a varying number of digits after that.  It can store fractional parts of the second.</li>
+  <li><strong>Z</strong> is always a hardcoded capital letter "Z", meaning its the local timezone-less timestamp.</li>
+</ul>
+
+<p>This string format should be possible to sort on directly.</p>
 
 <p>Example:</p>
 

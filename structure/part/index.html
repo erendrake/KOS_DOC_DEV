@@ -80,12 +80,36 @@ Go To Documentation First Page
   </thead>
   <tbody>
     <tr>
+      <td>:CONTROLFROM</td>
+      <td>Boolean</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>zero args</td>
+      <td>Set to TRUE to cause the game to do the same thing as when you rightclick a part on a vessel and select "control from here" on the menu.  It rotates the control orientation so that fore/aft/left/right/up/down now match the orientation of this part.  NOTE that this will not work for every type of part.  It only works for those parts that KSP itself allows this for (control cores and docking ports).</td>
+    </tr>
+    <tr>
       <td>:NAME</td>
       <td>String</td>
       <td>yes</td>
       <td>no</td>
       <td>zero args</td>
-      <td>name of part.</td>
+      <td>Name of part as it is used behind the scenes in the game's API code.</td>
+    </tr>
+    <tr>
+      <td>:TITLE</td>
+      <td>String</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>zero args</td>
+      <td>The title of the part as it appears on-screen in the gui.</td>
+    </tr>
+    <tr>
+      <td>:TAG</td>
+      <td>String</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>zero args</td>
+      <td>The name tag value that may exist on this part if you have given the part a name via the <a href="../../summary_topics/nametag/index.html">nametag system</a></td>
     </tr>
     <tr>
       <td>:STAGE</td>
@@ -104,28 +128,36 @@ Go To Documentation First Page
       <td>All parts have a unique ID number.  Test if two parts are the same part by seeing if this is the same between them.</td>
     </tr>
     <tr>
+      <td>:ROTATION</td>
+      <td><a href="../direction/index.html">Direction</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>zero args</td>
+      <td>The rotation of this part's X-axis, which points out of its side and is probably not what you want.  You probably want the :FACING suffix instead.</td>
+    </tr>
+    <tr>
+      <td>:POSITION</td>
+      <td><a href="../vector/index.html">Vector</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>zero args</td>
+      <td>The location of this part in the universe.  It is expressed in the same frame of reference as all the other positions in kOS, and thus can be used to help do things like navigate toward the position of a docking port.</td>
+    </tr>
+    <tr>
+      <td>:FACING</td>
+      <td><a href="../direction/index.html">Direction</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>zero args</td>
+      <td>the direction that this part is facing.</td>
+    </tr>
+    <tr>
       <td>:RESOURCES</td>
       <td><a href="../list/index.html">List</a></td>
       <td>yes</td>
       <td>no</td>
       <td>zero args</td>
       <td>list of the <a href="../resource/index.html">ResourceValues</a> in this part.</td>
-    </tr>
-    <tr>
-      <td>:MODULES</td>
-      <td><a href="../list/index.html">List</a> of strings</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>zero args</td>
-      <td>list of the names of <a href="../partmodule/index.html">PartModules</a> enabled for this part.</td>
-    </tr>
-    <tr>
-      <td>:GETMODULE</td>
-      <td><a href="../partmodule/index.html">PartModule</a></td>
-      <td>yes</td>
-      <td>no</td>
-      <td>one arg:<br />moduleName [string]</td>
-      <td>Get one of the <a href="../partmodule.html">PartModules</a> attached to this part, given the name of the module.  (See :MODULES for a list of all the mames available).</td>
     </tr>
     <tr>
       <td>:TARGETABLE</td>
@@ -144,23 +176,62 @@ Go To Documentation First Page
       <td>the vessel that contains this part.</td>
     </tr>
     <tr>
-      <td>:FACING</td>
-      <td><a href="../direction/index.html">Direction</a></td>
+      <td>:GETMODULE</td>
+      <td><a href="../partmodule/index.html">PartModule</a></td>
       <td>yes</td>
       <td>no</td>
-      <td>zero args</td>
-      <td>the direction that this part is facing.</td>
+      <td>one arg:<br />moduleName [string]</td>
+      <td>Get one of the <a href="../partmodule.html">PartModules</a> attached to this part, given the name of the module.  (See :MODULES for a list of all the mames available).</td>
     </tr>
     <tr>
-      <td>:CONTROLFROM</td>
-      <td>Boolean</td>
-      <td>no</td>
+      <td>:MODULES or :ALLMODULES</td>
+      <td><a href="../list/index.html">List</a> of strings</td>
       <td>yes</td>
+      <td>no</td>
       <td>zero args</td>
-      <td>Set to TRUE to cause the game to do the same thing as when you rightclick a part on a vessel and select "control from here" on the menu.  It rotates the control orientation so that fore/aft/left/right/up/down now match the orientation of this part.  NOTE that this will not work for every type of part.  It only works for those parts that KSP itself allows this for (control cores and docking ports).</td>
+      <td>list of the names of <a href="../partmodule/index.html">PartModules</a> enabled for this part.</td>
+    </tr>
+    <tr>
+      <td>:PARENT</td>
+      <td><a href="#Part">Part</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>zero args</td>
+      <td>When walking the <a href="../../summary_topics/vesselpartquery/index.html">tree of parts</a>, this is the part that this part is attached to on the way "up" toward the root part.</td>
+    </tr>
+    <tr>
+      <td>:HASPARENT</td>
+      <td>Boolean</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>zero args</td>
+      <td>When walking the <a href="../../summary_topics/vesselpartquery/index.html">tree of parts</a>, this is true as long as there is a parent part to this part, and is false if this part has no parent (which can only happen on the root part).</td>
+    </tr>
+    <tr>
+      <td>:CHILDREN</td>
+      <td><a href="../list/index.html">List</a> of <a href="#Part">Parts</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>zero args</td>
+      <td>When walking the <a href="../../summary_topics/vesselpartquery/index.html">tree of parts</a>, this is all the parts that are attached as children of this part.  It returns a list of zero length when this part is a "leaf" of the parts tree.</td>
     </tr>
   </tbody>
 </table>
+
+<p>These are the meanings of the part naming fields:</p>
+
+<p><strong>Part:TAG</strong>: A part's <em>tag</em> is whatever custom name you have given it using the
+<a href="../nametag/index.html">nametag system described here</a>.  This is probably the
+best naming convention to use because it lets you make up whatever name you like
+for the part and use it to pick the parts you want to deal with in your script.</p>
+
+<p><strong>Part:TITLE</strong>: A part's <em>title</em> is the name it has inside the GUI interface on
+the screen that you see as the user.</p>
+
+<p><strong>Part:NAME</strong>: A part's <em>name</em> is the name it is given behind the scenes in KSP.
+It never appears in the normal GUI for the user to see, but it is used in places
+like Part.cfg files, the saved game persistence file, the ModuleManager mod,
+and so on.</p>
 
 <p>Example:</p>
 

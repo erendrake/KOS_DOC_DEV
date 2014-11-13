@@ -79,12 +79,17 @@ of a body's atmosphere.</p>
   </thead>
   <tbody>
     <tr>
+      <td>:BODY</td>
+      <td>string</td>
+      <td>The Body that this atmosphere is around - as a STRING NAME, not a Body object.</td>
+    </tr>
+    <tr>
       <td>:EXISTS</td>
       <td>bool</td>
       <td>True if this atmosphere is "real" and not just a dummy placeholder.</td>
     </tr>
     <tr>
-      <td>:HASOXYGEN</td>
+      <td>:OXYGEN</td>
       <td>bool</td>
       <td>True if the air has oxygen and could therefore be used by a jet engine's intake.</td>
     </tr>
@@ -103,11 +108,6 @@ of a body's atmosphere.</p>
       <td>float</td>
       <td>The altitude at which the atmosphere is "officially" advertised as ending.  (actual ending value differs, see below).</td>
     </tr>
-    <tr>
-      <td>:BODY</td>
-      <td>string</td>
-      <td>The Body that this atmosphere is around - as a STRING NAME, not a Body object.</td>
-    </tr>
   </tbody>
 </table>
 
@@ -122,6 +122,12 @@ of a body's atmosphere.</p>
   <li><strong>pressure</strong> : A measure of the force the air pushes on a surface with.  In SI units, it's Newtons per Square Meter.  <em>This value is almost never used directly in any calculation.  Instead you just calculate everything in terms of multiples of Atm's.</em></li>
   <li><strong>density</strong> : A measure of how much mass of air there is in a volume of space.  In SI units, it's Kilograms per Cubic Meter.</li>
 </ul>
+
+<h2 id="the-following-only-applies-to-the-stock-ksp-atmosphere">The following only applies to the STOCK KSP atmosphere.</h2>
+
+<blockquote>
+  <p><em>If you have installed a mod such as <a href="http://forum.kerbalspaceprogram.com/threads/20451-0-25-Ferram-Aerospace-Research-v0-14-3-2-10-21-14">FAR</a>, that changes the atmosphere, then much of what is said below will not apply.</em></p>
+</blockquote>
 
 <p>The level of atmosphere can be calculated for any altitude as follows:</p>
 

@@ -249,7 +249,31 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>yes</td>
       <td>no</td>
       <td>1 arg:<br />partname [string]</td>
-      <td>Gets a list of all the <a href="../part/index.html">parts</a> that match the given name.  The matching is done case-insensitively. For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
+      <td>Gets a list of all the <a href="../part/index.html">parts</a> that match the given Part:NAME.  The matching is done case-insensitively. For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
+    </tr>
+    <tr>
+      <td>:PARTSTITLED</td>
+      <td><a href="../list/index.html">LIST</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>1 arg:<br />partname [string]</td>
+      <td>Gets a list of all the <a href="../part/index.html">parts</a> that match the given Part:TITLE.  The matching is done case-insensitively. For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
+    </tr>
+    <tr>
+      <td>:PARTSTAGGED</td>
+      <td><a href="../list/index.html">LIST</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>1 arg:<br />partname [string]</td>
+      <td>Gets a list of all the <a href="../part/index.html">parts</a> that match the given Part:TAG value.  The matching is done case-insensitively. For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
+    </tr>
+    <tr>
+      <td>:PARTSDUBBED</td>
+      <td><a href="../list/index.html">LIST</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>1 arg:<br />partname [string]</td>
+      <td>Gets a list of all the <a href="../part/index.html">parts</a> that have the given name regardless of whether that name is the Part:Name, the Part:Tag, or the Part:Title.  It is effectively the distinct union of :PARTSNAMED(val), :PARTSTITLED(val), :PARTSTAGGED(val).  The matching is done case-insensitively. For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
     </tr>
     <tr>
       <td>:MODULESNAMED</td>
@@ -275,8 +299,17 @@ Much of what a Vessel can do can now by done by any orbitable object.  The docum
       <td>1 arg:<br />actionGroupName [bareword identifier]</td>
       <td>Gets a list of all the <a href="../partmodule/index.html">PartModules</a> which have at least one action triggered by the given action group. For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
     </tr>
+    <tr>
+      <td>:ALLPARTSTAGGED</td>
+      <td><a href="../list/index.html">LIST</a></td>
+      <td>yes</td>
+      <td>no</td>
+      <td>1 arg:<br />partname [string]</td>
+      <td>Gets a list of all the <a href="../part/index.html">parts</a> that contain <em>ANY</em> nametag on them of any sort that is nonblank.  For more information, see <a href="../../summary_topics/ship_parts_and_modules/index.html">ship parts and modules</a></td>
+    </tr>
   </tbody>
 </table>
+
 
 </article>
 </div>

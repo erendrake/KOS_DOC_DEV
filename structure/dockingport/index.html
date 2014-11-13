@@ -72,6 +72,7 @@ Go To Documentation First Page
       <th>Type</th>
       <th>Get</th>
       <th>Set</th>
+      <th>Method arguments</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -81,27 +82,71 @@ Go To Documentation First Page
       <td>varies</td>
       <td>..</td>
       <td>..</td>
+      <td>..</td>
       <td>A DockingPort is a kind of Part, and therefore can use all the suffixes of Part.  Shown below are only the suffixes that are unique to DockingPort</td>
+    </tr>
+    <tr>
+      <td>:AQUIRERANGE</td>
+      <td>Number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no args</td>
+      <td>gets the range at which the port will "notice" another port and pull on it.</td>
+    </tr>
+    <tr>
+      <td>:AQUIREFORCE</td>
+      <td>Number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no args</td>
+      <td>gets the force with which the port pulls on another port.</td>
+    </tr>
+    <tr>
+      <td>:AQUIRETORQUE</td>
+      <td>Number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no args</td>
+      <td>gets the rotational force with which the port pulls on another port.</td>
+    </tr>
+    <tr>
+      <td>:REENGAGEDDISTANCE</td>
+      <td>Number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no args</td>
+      <td>how far the port has to get away after undocking in order to re-enable docking.</td>
+    </tr>
+    <tr>
+      <td>:DOCKEDSHIPNAME</td>
+      <td>Number</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no args</td>
+      <td>name of vessel on the other side of the docking port.</td>
     </tr>
     <tr>
       <td>:STATE</td>
       <td>string</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>One of the string values listed below after the table.</td>
     </tr>
     <tr>
-      <td>:DOCKEDVESSELNAME</td>
-      <td>string</td>
-      <td>yes</td>
+      <td>:UNDOCK</td>
+      <td>n/a</td>
+      <td>n/a</td>
       <td>no</td>
-      <td>name of the vessel docked to the port.</td>
+      <td>no args</td>
+      <td>CALL this as a method to cause the docking port to detach.</td>
     </tr>
     <tr>
       <td>:TARGETABLE</td>
       <td>boolean</td>
       <td>yes</td>
       <td>no</td>
+      <td>no args</td>
       <td>True if this part can be picked with SET TARGET TO</td>
     </tr>
   </tbody>
