@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+<meta charset='utf-8'>
+<meta content='initial-scale=1.0' name='viewport'>
+<meta content='yes' name='apple-mobile-web-app-capable'>
+<meta content='black' name='apple-mobile-web-app-status-bar-style'>
+
+<title></title>
+<link href="../../stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../../stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../../stylesheets/pygment_trac.css" media="screen" rel="stylesheet" type="text/css" />
+<link href='favicon.ico' rel='shortcut icon'>
+<link href='touch-icon-iphone.png' rel='apple-touch-icon'>
+<link href='touch-icon-ipad.png' rel='apple-touch-icon' sizes='72x72'>
+<link href='touch-icon-iphone-retina.png' rel='apple-touch-icon' sizes='114x114'>
+<link href='touch-icon-ipad-retina.png' rel='apple-touch-icon' sizes='144x144'>
+
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body class=''>
+<div class='wrapper'>
+<header>
+<h1 class='title'>
+<a href='/KOS_DOC/'>
+kOS
+</a>
+</h1>
+</header>
+<div id='container'>
+<p class='tagline'>Fully programmable autopilot mod for KSP. Originally By Nivekk</p>
+<div id='main' role='main'>
+<div class='download-bar'>
+<div class='inner'>
+<a class='curse download-button' href='http://www.curse.com/ksp-mods/kerbal/220265-kos-scriptable-autopilot-system'>
+<span>Curse Download</span>
+</a>
+<a class='download-button kerbalstuff' href='https://kerbalstuff.com/mod/86/kOS:%20Scriptable%20Autopilot%20System'>
+<span>KerbalStuff Download</span>
+</a>
+<a class='download-button reddit' href='http://www.reddit.com/r/kos/'>
+<span>Reddit</span>
+</a>
+<a class='download-button forum' href='http://forum.kerbalspaceprogram.com/threads/68089'>
+<span>Forum</span>
+</a>
+<a class='download-button home' href='https://github.com/KSP-KOS/KOS'>
+<span>Home</span>
+</a>
+<a class='code' href='/KOS_DOC/'>
+Go To Documentation First Page
+</a>
+</div>
+</div>
+<span class='blc'></span>
+<span class='trc'></span>
+<article class='markdown-body'>
+<h1 id="compiling-to-a-ksm-file">Compiling to a KSM file</h1>
+
+<p>When you run your Kerboscript programs, behind the scenes they get compiled
+into a form in memory that runs much smoother but at the same time is 
+quite hard for a Kerbal to read and understand.  The actual computer
+hardware built by your friends at Compotronix incorporated actually run
+the program using these tiny instructions called "Opcodes".  In the early
+days of room-sized computers before we were able to get them down to
+the compact size of just a meter or so across, all programmers had to use
+this difficult system, referred to as "machine language".  Ah, those were
+heady days, but they were hard.</p>
+
+<p>The commands you actually write when you say something like "SET X TO 1.0." are
+really a euphamism for these "machine langauge" opcodes under the surface.</p>
+
+<p>When you try to "RUN" your script, the first thing that kOS does is transform
+your script into this ancient and arcane "machine language" form, storing it
+in its memory, and from then on it runs using that.</p>
+
+<p>This process of transforming your script into Machine Language, or "ML" is
+called "Compiling".</p>
+
+<p>The "RUN" command does this silently, without telling you.  This is why
+you may have noticed the universe slightly stutter for a moment when you
+first run your program.  Compiling is hard work for the universe to do.</p>
+
+<h2 id="why-do-i-care">Why do I care?</h2>
+
+<p><em>(Warning, this is an experimental feature)</em></p>
+
+<p>The reason it matters is this:  Although once it's loaded into memory
+and running, these Opcodes actually have a lot of baggage and take up a
+lot of space, when they're stored passively on the disk not doing anything,
+they can be smaller than your script programs are.  For one thing, they
+don't care about your comments (only other Kerbals reading your script do),
+and they don't care about your indenting (only other Kerbals reading your
+script do). </p>
+
+<p>So, given that the compiled "ML" codes are the only thing your program
+really needs to be run, why not just store THAT instead of storing the 
+entire script, and then you can put the ML files on your remote probes
+instead of putting the larger script files on them.</p>
+
+<p>And THAT is the purpose of the COMPILE command.</p>
+
+<p>It does some, but not all, of the compiling work that the RUN command
+does, and then stores the results in a file that you can run instead
+of running the original script.</p>
+
+<p>The output of the COMPILE command is a file in what we call KSM format.</p>
+
+<p>KSM stands for "KerboScript Machine code", and it has nearly the same
+information the program will have when it's loaded and running, minus a
+few extra steps about relocating it in memory.</p>
+
+<h2 id="how-to-use-it">How to use it:</h2>
+
+<p>Let's say that you have 3 programs your probe needs, called:</p>
+
+<ul>
+  <li>myprog1.ks</li>
+  <li>myprog2.ks</li>
+  <li>myprog3.ks</li>
+</ul>
+
+<p>And that myprog1 calls myprog2 and myprog3, and you normall would call
+the progam this way:</p>
+
+<pre><code>SWITCH TO 1.
+COPY myprog1 from ARCHIVE.
+COPY myprog2 from ARCHIVE.
+COPY myprog3 from ARCHIVE.
+RUN myprog1(1,2,"hello").
+</code></pre>
+
+<p>Then you can put just the compiled KSM versions of them on your vessel
+and run it this way:</p>
+
+<pre><code>SWITCH TO ARCHIVE.
+
+COMPILE myprog1.ks to myprog1.ksm.
+COPY myprog1.ksm to 1.
+
+COMPILE myprog2. // If you leave the arguments off, it assumes you are going from .ks to .ksm
+COPY myprog2.ksm to 1.
+
+COMPILE myprog3. // If you leave the arguments off, it assumes you are going from .ks to .ksm
+COPY myprog2.ksm to 1.
+
+SWITCH TO 1.
+RUN myprog1(1,2,"hello").
+</code></pre>
+
+<h2 id="default-file-naming-conventions">Default file naming conventions</h2>
+
+<p>When you have both a .ks and a .ksm file, the RUN command allows you to specify which
+one you meant explicitly, like so:</p>
+
+<pre><code>RUN myprog1.ks.
+RUM myprog1.ksm.
+</code></pre>
+
+<p>But if you just leave the file extension off, and do this:</p>
+
+<pre><code>RUN myprog1.
+</code></pre>
+
+<p>Then the RUN command will first try to run a file called "myprog1.ksm" and if it cannot
+find such a file, then it will try to run one called "myprog1.ks".</p>
+
+<p>In this way, if you decide to take the plunge and attempt the use of KSM files,
+you shouldn't have to change the way any of your scripts call each other,
+provided you just used versions of the filenames without mentioning the file
+extensions.</p>
+
+<h2 id="downsides-to-using-ksm-files">Downsides to using KSM files</h2>
+
+<ol>
+  <li>
+    <p>Be aware that if you use this feature, you do lose the ability to have
+the line of code printed out for you when the kOS computer finds an 
+error in your program.  It will still tell you what line number the 
+error happened on, but it cannot show you the line of code.  Just the
+number.</p>
+  </li>
+  <li>
+    <p>Know that you cannot view the program inside the in-game editor
+anymore when you do this.  A KSM file will not appear right in the 
+editor.  It requires a magic tool called a "hex editor" to properly
+see what's happening inside the file.</p>
+  </li>
+  <li>
+    <p><strong>The file isn't always smaller</strong>.  There's a threshold at which
+the KSM file is actualy bigger than the source KS file.  For large
+KS files, the KSM file will be smaller, but for short KS files, the
+KSM file will be bigger, because there's a small amount of overhead
+they have to store that is only efficient if the data was large enough.</p>
+  </li>
+</ol>
+
+<h2 id="more-reading--fiddling-with-your-bits">More reading.  Fiddling with your bits.</h2>
+
+<p>So, if you are intrigued by all this and want to see how it all <em>REALLY</em>
+works under the hood, Computronix has deciced to make
+<a href="https://github.com/KSP-KOS/KOS/blob/develop/src/kOS.Safe/Compilation/CompiledObject-doc.md">internal document MLfile-zx1/a</a> on the basic plan of the
+ML file system open for public viewing, if you are one of those rare
+Kerbals that enjoys fiddling with your bits.  No, not THOSE kind of bits,
+the computery kind!</p>
+
+
+</article>
+</div>
+</div>
+<footer>
+<div class='owner'>
+<p>
+<a class='avatar' href='https://github.com/erendrake'>
+<img height='48px' src='https://0.gravatar.com/avatar/165af1182d7a820a7dacba19befc2e9c?d=https%3A%2F%2Fidenticons.github.com%2Fdb79977913a22100d5b0a7622deb2905.png&amp;amp;r=x&amp;amp;s=60' width='48px'>
+</a>
+<a href='https://github.com/erendrake'>
+erendrake
+</a>
+maintains
+<a href='https://github.com/KSP-KOS/KOS'>
+kOS
+</a>
+</p>
+</div>
+</footer>
+<div class='current-section'>
+<a href='#top'>
+Scroll to top
+</a>
+<p class='name'></p>
+</div>
+</div>
+<script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+<script src="../../javascripts/application.js" type="text/javascript"></script>
+<script src="../../javascripts/script.js" type="text/javascript"></script>
+</body>
+</html>

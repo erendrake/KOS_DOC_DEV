@@ -65,12 +65,75 @@ Go To Documentation First Page
 
 <hr />
 
+<h2 id="volume-and-filename-arguments">Volume and Filename arguments</h2>
+
+<h3 id="this-is-a-recent-change-in-kos-v015">This is a recent change in kOS v0.15.</h3>
+
+<p>Any of the commands below which use filename arguments, <strong>with the exception
+of the RUN command</strong>, follow these rules:</p>
+
+<ul>
+  <li>(expression filenames) A filename may be an expression which evaluates to a string.</li>
+  <li>(bareword filenames) A filename may also be an undefined identifier which does not match a variable name, in which case the bare word name of the identifier will be used as the filename.  If the identifier does match a variable name, then it will be evaluated as an expression and the variable's contents will be used as the filename.</li>
+  <li>A bareword filename may contain file extensions with dots, provided it does not end in a dot.</li>
+  <li>If the filename does not contain a file extension, kOS will pad it with a ".ks" extension and use that.</li>
+</ul>
+
+<p>Putting the above rules together, you can refer to filenames in any of the following ways:</p>
+
+<ul>
+  <li>copy myfilename to 1.       // This is an example of a bareword filename.</li>
+  <li>copy "myfilename" to 1.     // This is an example of an EXPRESSION filename. </li>
+  <li>copy myfilename.ks to 1.    // This is an example of a bareword filename.</li>
+  <li>copy myfilename.txt to 1.   // This is an example of a bareword filename.</li>
+  <li>copy "myfilename.ks" to 1.  // This is an example of an EXPRESSION filename</li>
+  <li>set str to "myfile" + "name" + ".ks".  copy str to 1.  // This is an example of an EXPRESSION filename</li>
+</ul>
+
+<p><strong>Limits:</strong></p>
+
+<p>The following rules apply as limitations to the bareword filenames:</p>
+
+<ul>
+  <li>The <strong>RUN command only works with bareword filenames</strong>, not expression filenames.  Every other command works with either type of filename.</li>
+  <li>Filenames containing any characters other than A-Z, 0-9, underscore, and the period extension separator ('.'), can only be referred to using a string expression (with quotes), and cannot be used as a bareword expression (without quotes).</li>
+  <li>If your filesystem is case-senstive (Linux and sometimes Mac OSX, or even Windows if using some kinds of remote network drives), then bareword filenames will only work properly on filenames that are all lowercase.  If you try to use a file with capital letters in the name on these systems, you will only be able to do so by quoting it.</li>
+</ul>
+
+<p><strong>Volumes too:</strong></p>
+
+<p>The rules for filenames also apply to volumes.  You may do this for example:</p>
+
+<ul>
+  <li>set volNum to 1. copy "myfile" to volNum.</li>
+</ul>
+
+<hr />
+
+<h2 id="compile-1-to-2">COMPILE $1 (TO $2)?</h2>
+
+<h3 id="experimental">(experimental)</h3>
+
+<h4 id="arguments">Arguments:</h4>
+<ul>
+  <li>argument 1: Name of source file.</li>
+  <li>argument 2: Name of destination file.  If the optional argument 2 is missing, it will assume it's the same as argument 1, but with a file extension changed to *.ksm.</li>
+</ul>
+
+<p>Pre-compiles a script into an <a href="../../summary_topics/MLfile/index.html">Kerboscript ML Exceutable image</a> that can be used instead of executing the program discript directly.</p>
+
+<p>The RUN command (elsewhere on this page) can work with either *.ks script files or *.ksm compiled files.</p>
+
+<p>The full details of this process are long and complex enough to be placed on a separate page.</p>
+
+<p>Please see <a href="../../summary_topics/MLfile/index.html">the details of the Kerboscript ML Executable</a>.</p>
+
 <h2 id="copy-1-fromto-2">COPY $1 FROM/TO $2</h2>
 
-<h4 id="arguments">Arguments</h4>
+<h4 id="arguments-1">Arguments</h4>
 <ul>
-  <li>$1: Name of target file.</li>
-  <li>$2: Target volume.</li>
+  <li>argument 1: Name of target file.</li>
+  <li>argument 2: Target volume.</li>
 </ul>
 
 <p>Copies a file to or from another volume. Volumes can be referenced by their ID numbers or their names if they’ve been given one. See LIST, SWITCH and RENAME.</p>
@@ -81,9 +144,13 @@ Go To Documentation First Page
 
 <p>Example:</p>
 
-<pre><code>SWITCH TO 1.       // Makes volume 1 the active volume
-COPY file1 FROM 0. // Copies a file called file1 from volume 0 to volume 1
-COPY file2 TO 0.   // Copies a file called file1 from volume 1 to volume 0
+<pre><code>SWITCH TO 1.             // Makes volume 1 the active volume
+COPY file1 FROM 0.       // Copies a file called file1.ks from volume 0 to volume 1
+COPY file2 TO 0.         // Copies a file called file1.ks from volume 1 to volume 0
+COPY file1.ks FROM 0.    // Copies a file called file1.ks from volume 0 to volume 1
+COPY file2.ksm TO 0.     // Copies a file called file1.ksm from volume 1 to volume 0
+COPY "file1.ksm" FROM 0. // Copies a file called file1.ksm from volume 0 to volume 1
+COPY "file1" + "." + "ks" FROM 0. // Copies a file called file1.ks from volume 0 to volume 1
 </code></pre>
 
 <hr />
@@ -92,18 +159,21 @@ COPY file2 TO 0.   // Copies a file called file1 from volume 1 to volume 0
 
 <p>Deletes a file. You can delete a file from the current volume, or from a named volume.</p>
 
-<h4 id="arguments-1">Arguments</h4>
+<h4 id="arguments-2">Arguments</h4>
 <ul>
-  <li>$1: Name of target file.</li>
-  <li>$2: (optional) Target volume.</li>
+  <li>argument 1: Name of target file.</li>
+  <li>argument 2: (optional) Target volume.</li>
 </ul>
 
 <p>In order for a delete operation to work, the volumes being copied between must be within <a href="../../summary_topics/commrange/index.html">CommRange</a>.</p>
 
 <p>Example:</p>
 
-<pre><code>DELETE file1.         // Deletes file1 from the active volume.
-DELETE file1 FROM 1.  // Deletes file1 from volume 1
+<pre><code>DELETE file1.         // Deletes file1.ks from the active volume.
+DELETE "file1".       // Deletes file1.ks from the active volume.
+DELETE file1.txt.     // Deletes file1.txt from the active volume.
+DELETE "file1.txt".   // Deletes file1.txt from the active volume.
+DELETE file1 FROM 1.  // Deletes file1.ks from volume 1
 </code></pre>
 
 <hr />
@@ -112,9 +182,9 @@ DELETE file1 FROM 1.  // Deletes file1 from volume 1
 
 <p>Edits a program on the currently selected volume.</p>
 
-<h4 id="arguments-2">Arguments</h4>
+<h4 id="arguments-3">Arguments</h4>
 <ul>
-  <li>$1: Name of file for editing.</li>
+  <li>argument 1: Name of file for editing.</li>
 </ul>
 
 <p>NOTE: The Edit feature was lost in version 0.11 but is back again after version 0.12.2 under a new
@@ -125,7 +195,11 @@ editor external to KSP, however for a fast peek at the code during play, this ed
 
 <p>Example:</p>
 
-<pre><code>EDIT filename.
+<pre><code>EDIT filename.       // edits filename.ks
+EDIT filename.ks.    // edits filename.ks
+EDIT "filename.ks".  // edits filename.ks
+EDIT "filename".     // edits filename.ks
+EDIT "filename.txt". // edits filename.txt
 </code></pre>
 
 <hr />
@@ -134,17 +208,17 @@ editor external to KSP, however for a fast peek at the code during play, this ed
 
 <p>Logs the selected text to a file on the local volume. Can print strings, or the result of an expression.</p>
 
-<h4 id="arguments-3">Arguments</h4>
+<h4 id="arguments-4">Arguments</h4>
 <ul>
-  <li>$1: Value you would like to log.</li>
-  <li>$2: Name of file to log into.</li>
+  <li>argument 1: Value you would like to log.</li>
+  <li>argument 2: Name of file to log into.</li>
 </ul>
 
 <p>Example:</p>
 
-<pre><code>LOG “Hello” to mylog.
-LOG 4+1 to mylog .
-LOG “4 times 8 is: “ + (4*8) to mylog.
+<pre><code>LOG “Hello” to mylog.txt.    // logs to "mylog.txt".
+LOG 4+1 to "mylog" .         // logs to "mylog.ks" because .ks is the default extension.
+LOG “4 times 8 is: “ + (4*8) to mylog.   // logs to mylog.ks because .ks is the default extension.
 </code></pre>
 
 <hr />
@@ -153,10 +227,10 @@ LOG “4 times 8 is: “ + (4*8) to mylog.
 
 <p>Renames a file or volume.</p>
 
-<h4 id="arguments-4">Arguments</h4>
+<h4 id="arguments-5">Arguments</h4>
 <ul>
-  <li>$1: Volume/File Name you would like to change.</li>
-  <li>$2: New name for $1.</li>
+  <li>argument 1: Volume/File Name you would like to change.</li>
+  <li>argument 2: New name for $1.</li>
 </ul>
 
 <p>Example:</p>
@@ -172,20 +246,50 @@ RENAME FILE MyFile TO AutoLaunch.
 <p>Runs the specified file as a program, optionally passing information to the program 
 in the form of a comma-separated list of arguments in parentheses.</p>
 
-<h4 id="arguments-5">Arguments</h4>
+<h4 id="arguments-6">Arguments</h4>
 <ul>
-  <li>$1: File to run.</li>
+  <li>argument 1: File to run.</li>
   <li>comma-separagted-args: a list of values to pass into the program.</li>
 </ul>
 
 <p>Example:</p>
 
-<pre><code>RUN AutoLaunch.
+<pre><code>RUN AutoLaunch.ks.
+RUN AutoLaunch.ksm.
+RUN AutoLaunch.      // runs AutoLaunch.ksm if available, else runs AutoLaunch.ks.
 RUN AutoLaunch( 75000, true, "hello" ).
+RUN AutoLaunch.ks( 75000, true, "hello" ).
+RUN AutoLaunch.ksm( 75000, true, "hello" ).
 </code></pre>
 
 <p>The program that is reading the arguments sees them in the variables it
 mentions in <a href="../variable/index.html#declare-parameter">DECLARE PARAMETER statements</a></p>
+
+<h4 id="important-exceptions-to-the-usual-filename-rules-for-run">Important exceptions to the usual filename rules for RUN</h4>
+
+<p>The RUN command does not allow the same sorts of generic open-ended filenames that the other
+file commands allow.  This is very important.</p>
+
+<ul>
+  <li>RUN only works when the filename is a bareword filename.  It cannot use expression filenames:</li>
+</ul>
+
+<pre><code>    RUN "ProgName"   // THIS WILL FAIL.  Run needs a bare word filename.
+    SET ProgName to "MyProgram".
+    RUN ProgName     // THIS WILL FAIL also.  It will attempt to run a file
+                     // called "ProgName.ksm" or "ProgName.ks", when it sees this,
+                     // rather than "MyProgram".
+</code></pre>
+
+<blockquote>
+  <p>The reasons for the exception to how filenames work for the RUN
+command are too complex to go into in large detail here.   Here's the
+short version: While the kOS system does defer the majority of the work
+of actually compiling subprogram scripts until run-time, it still has to
+generate some header info about them at compile time, and the filename
+has to be set in stone at that time.  Changing this would require a 
+large re-write of some of the archetecture of the virtual machine.</p>
+</blockquote>
 
 <hr />
 
@@ -195,9 +299,9 @@ mentions in <a href="../variable/index.html#declare-parameter">DECLARE PARAMETER
 
 <p>In order for a switch operation to work, it must be within <a href="../../summary_topics/commrange/index.html">CommRange</a>.</p>
 
-<h4 id="arguments-6">Arguments</h4>
+<h4 id="arguments-7">Arguments</h4>
 <ul>
-  <li>$1: Volume name/number</li>
+  <li>argument 1: Volume name/number</li>
 </ul>
 
 <p>Example:</p>
